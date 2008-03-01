@@ -53,7 +53,7 @@ end
 
 task :make_jar => [] do
   Dir.chdir("bin"){
-    system "jar cf ../lib/flyparse_parsers.jar emacs org"
+    system "jar cf ../lib/flyparse_parsers.jar emacs"
     if $?.success?; puts "Created jar successfully."; end
   }
 end
