@@ -1,0 +1,937 @@
+/* Slashdot's stylesheet */
+* {
+    margin:0pt;
+    padding:0pt;
+}
+.body ul, .body li {
+    padding-left:1em;
+}
+
+
+body {
+background:#222222 url(//images.slashdot.org/body-bg.png) repeat-x scroll left bottom;
+border-bottom:7px solid #006666;
+color:#111111;
+font-size:82%;
+font-size-adjust:none;
+font-stretch:normal;
+font-style:normal;
+font-variant:normal;
+font-weight:normal;
+line-height:150%;
+min-width:680px;
+padding-bottom:15px;
+font-family:sans-serif;
+
+}
+#top_parent {
+    border:1px solid transparent;
+}
+table, tr, td, th {
+    font-size:100%;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight:normal;
+    text-shadow:#000000 0pt 0pt 0pt;
+}
+#contents h1 {
+    font-size:185%;
+    margin-bottom:1em;
+}
+#contents h2 {
+    font-size:139%;
+    margin:1em 0pt 0.25em;
+}
+#slashboxes #contents ul {
+    margin-bottom:20px;
+    padding-left:1.25em;
+}
+#slashboxes #contents ul li {
+    list-style-image:url(//images.slashdot.org/bullet.gif);
+}
+
+#contents p {
+    margin:0pt 0pt 1em;
+}
+a {
+    color:#005555;
+}
+a:visited {
+    color:#555555;
+}
+a:hover {
+    text-decoration:none;
+}
+hr {
+    border-color:#555555;
+    border-style:solid;
+    border-width:1px 0pt 0pt;
+}
+img {
+    border:medium none;
+    text-decoration:none;
+}
+sup {
+    margin:0pt 0pt -0.3em;
+}
+fieldset {
+    border:medium none;
+}
+fieldset legend {
+    display:none;
+}
+#jump {
+    display:none;
+}
+div.ad1 {
+    margin:0pt;
+    overflow:hidden;
+    padding:0pt;
+    text-align:center;
+}
+.article div.ad6 {
+    margin:1em 0pt;
+}
+#frame {
+    background:#2E2E2E none repeat scroll 0%;
+    border-top:1px solid #444444;
+    clear:both;
+    margin:0pt;
+    padding:5px 0pt 0pt;
+}
+#topnav {
+    background:#004444 url(//images.slashdot.org/topnav-bg.png) repeat-x scroll left top;
+    height:55px;
+    margin:5px 1.25em 0pt;
+    position:relative;
+}
+#topnav div#rec_topics_header, #topnav ul {
+    display:none;
+}
+#topnav #logo {
+    height:100%;
+    width:415px;
+}
+#topnav #logo h1 {
+    display:block;
+    height:100%;
+    width:100%;
+}
+#topnav #logo h1 a {
+    background:transparent url(//images.slashdot.org/logo.png) no-repeat scroll left top;
+    display:block;
+    height:100%;
+    outline-color:invert;
+    outline-style:none;
+    outline-width:medium;
+    text-decoration:none;
+    text-indent:-5000px;
+    width:100%;
+}
+#topnav div.search {
+    position:absolute;
+    right:1.25em;
+    text-align:right;
+    top:17px;
+    white-space:nowrap;
+}
+div.search input {
+    font-size:93%;
+    width:18em;
+}
+div.search input.button {
+    margin-left:5px;
+    width:auto;
+}
+#slogan, #topnav label, #topnav legend {
+    display:none;
+}
+#wrapper {
+    background-color:#FFFFFF;
+    border-color:#222222;
+    border-style:solid;
+    border-width:1px 0pt;
+    padding:0pt 1.25em;
+}
+#contents:after {
+    clear:both;
+    content:".";
+    display:block;
+    height:0pt;
+    visibility:hidden;
+}
+#wrapper #articles, #wrapper #indexhead, #search.aduserbox .generaltitle, #search.aduserbox .generalbody, div#users-blocks {
+    margin-right:18.5em;
+    position:relative;
+}
+div#user-section {
+    background:#E6E6E6 url(//images.slashdot.org/sections-bg.png) repeat-x scroll left bottom;
+    font-size:93%;
+    margin-bottom:1.25em;
+    white-space:nowrap;
+}
+div#user-section * {
+    line-height:100%;
+}
+div#user-section div.content {
+    background:transparent url(//images.slashdot.org/sections-right.png) no-repeat scroll right bottom;
+    overflow:hidden;
+    padding:0.5em 0.8em;
+}
+div#user-section ul {
+    float:left;
+}
+div#user-section ul {
+    padding:0.3em 0pt;
+}
+div#user-section ul li {
+    display:inline;
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+}
+div#user-section ul li.begin {
+    font-weight:bold;
+    padding-left:0pt;
+}
+div#user-section ul li.name a {
+    font-weight:bold;
+}
+div#user-section ul li.name {
+    padding-left:0pt;
+}
+div#user-section ul li a {
+    font-size:100%;
+    padding:0pt 0.3em;
+    text-decoration:none;
+}
+div#user-section ul li:before {
+    color:#999999;
+    content:"|";
+}
+div#user-section ul li:first-child:before {
+    content:" ";
+}
+div#user-section ul li a#loginlink {
+    background:transparent url(//images.slashdot.org/login-arrow-collapsed.gif) no-repeat scroll 0pt 50%;
+    padding-left:1.2em;
+}
+div#user-section ul li a#loginlink.expanded {
+    background-image:url(//images.slashdot.org/login-arrow-expanded.gif);
+}
+div#user-section ul#user-utils {
+    float:right;
+    margin-top:0.25em;
+    padding:0pt 0pt 0.3em;
+}
+div#user-section div#loginform {
+    clear:both;
+    height:0pt;
+    margin:0pt;
+    overflow:hidden;
+    padding:0pt;
+    width:100%;
+}
+div#user-section div#loginform p {
+    display:none;
+}
+div#user-section div#loginform form {
+    padding:0.75em 0pt 0.25em;
+}
+div#user-section div#loginform form input {
+    margin-right:1em;
+    width:12em;
+}
+div#user-section div#loginform form input.button {
+    margin-right:0pt;
+    width:auto;
+}
+div#user-section div#loginform form label.checkbox {
+    margin-right:1em;
+}
+div#user-section div#loginform form label {
+    display:inline;
+}
+div#user-section div#loginform form label.checkbox input {
+    margin-right:0.25em;
+    width:auto;
+}
+#contents {
+    margin-left:10.5em;
+    position:relative;
+    width:auto;
+    z-index:1;
+}
+div.generaltitle div.title {
+    background:#004444 url(//images.slashdot.org/article-title-bg.png) repeat-x scroll left top;
+    border-bottom:1px solid #FFFFFF;
+    margin-bottom:0pt;
+    padding:0pt;
+}
+div.generaltitle div.title a {
+    color:#FFFFFF;
+    text-decoration:none;
+}
+div.generaltitle div.title h3 {
+    background:transparent url(//images.slashdot.org/article-title-left.png) no-repeat scroll left top;
+    color:#FFFFFF;
+    font-size:123%;
+    font-weight:bold;
+    padding:0.3em 0.7em 0.45em;
+}
+div.generalbody form {
+    background:#EEEEEE url(//images.slashdot.org/corner-eee-bottom-right.png) no-repeat scroll right bottom;
+    padding:0.5em 0.7em 1em;
+}
+div#users-blocks div.generalbody form {
+    background:transparent none repeat scroll 0%;
+    padding:0pt;
+}
+div.generalbody form fieldset {
+}
+div.generalbody form label {
+    font-weight:bold;
+}
+div.block div.title {
+    background:#666666 url(//images.slashdot.org/block-title-bg.png) repeat-x scroll 0%;
+}
+div.block div.title * {
+    line-height:100%;
+}
+div.block div.title h4 {
+    color:#FFFFFF;
+    font-size:93%;
+    font-weight:bold;
+    padding:0.5em 0.8em 0.6em;
+}
+div.block div.title a {
+    color:#FFFFFF;
+}
+div.block div.content ul {
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+}
+div.block div.content {
+    margin:0pt;
+    padding:0pt;
+}
+div#links {
+    background:#EEEEEE url(//images.slashdot.org/links-bg.png) no-repeat scroll left bottom;
+    float:left;
+    margin-right:1.25em;
+    padding-bottom:10px;
+    width:9.25em;
+}
+div#links div.block div.content, div#links div.block {
+    margin:0pt;
+    padding:0pt;
+}
+div#links div.block div.title {
+    background:#666666 url(//images.slashdot.org/block-title-bg.png) repeat-x scroll 0%;
+    margin:0pt;
+    position:relative;
+}
+div#links div.block div.title h4 {
+    margin:0pt;
+    padding:0.5em 0.8em 0.6em 2em;
+}
+div#links div.block div.title h4, div#links div.block.expanded div.title h4 {
+    background:transparent url(//images.slashdot.org/block-arrow-expanded.gif) no-repeat scroll 0.8em 50%;
+}
+div#links div.block.collapsed div.title h4 {
+    background:transparent url(//images.slashdot.org/block-arrow-collapsed.gif) no-repeat scroll 0.8em 50%;
+}
+div#links div.block.static div.title h4 {
+    background:transparent none repeat scroll 0%;
+    padding-left:0.8em;
+}
+div#links div.block div.content ul {
+    border-bottom:1px solid #DDDDDD;
+    margin:0pt;
+    padding:0pt;
+}
+div#links div.block div.content ul li {
+    list-style-image:none;
+    margin:0pt;
+}
+div#links div.block div.content ul * {
+    line-height:100%;
+}
+div#links div.block div.content ul li a {
+    border-top:1px solid #DDDDDD;
+    display:block;
+    font-size:93%;
+    padding:0.4em 0.8em 0.55em;
+}
+div#links div.block div.content ul li h2 {
+    font-size:100%;
+    margin:0pt;
+    padding:0pt;
+}
+div#links div.block div.content ul li h2 a {
+    font-weight:bold;
+    margin:0pt;
+}
+div#links div.block div.content ul li a:hover {
+    background:#006666 url(//images.slashdot.org/link-arrow.gif) no-repeat scroll right center;
+    color:#FFFFFF;
+    margin:0pt;
+    text-decoration:none;
+}
+div.article {
+    position:relative;
+}
+div.article div.title {
+    background:#004444 url(//images.slashdot.org/article-title-bg.png) repeat-x scroll left top;
+    border-bottom:1px solid #FFFFFF;
+    margin:0pt;
+}
+div.article div.title span, div.article div.title span a {
+    color:#8DC7C0;
+}
+div.article div.title span a {
+    text-decoration:underline;
+}
+div.article div.title span a:hover {
+    text-decoration:none;
+}
+div.article div.title h3 {
+    background:transparent url(//images.slashdot.org/article-title-left.png) no-repeat scroll left top;
+    color:#FFFFFF;
+    font-size:123%;
+    font-weight:bold;
+    padding:0.3em 0.7em 0.45em;
+}
+div.article div.future div.title {
+    background:#770000 url(//images.slashdot.org/slc.gif) no-repeat scroll left top;
+}
+div.article div.future div.title h3 {
+    background:transparent none repeat scroll 0%;
+}
+div.article div.details, div.article div.body {
+    padding:0.2em 0.7em;
+}
+div.article div.details {
+    background:#DDDDDD url(//images.slashdot.org/article-details-bg.png) repeat-x scroll left top;
+    font-size:93%;
+    line-height:130%;
+    padding:0.4em 0.7em 0.5em;
+}
+div.article div.details strong {
+    font-size:92%;
+    font-weight:normal;
+}
+div.article div.details strong b {
+    font-weight:bold;
+}
+div.article div.body {
+    margin:0.4em 0pt 0pt;
+    min-height:75px;
+}
+div.article div.body div.topic {
+    float:right;
+    margin:0.3em 0pt 0.3em 0.5em;
+    position:relative;
+}
+div.article div.body div.topic a {
+    text-decoration:none;
+}
+div.article div.intro i {
+    border-left:3px solid #DDDDDD;
+    display:block;
+    font-style:normal;
+    margin:0.25em 0pt 0.6em;
+    padding:0pt 0pt 0pt 0.85em;
+}
+div.article div.intro i a {
+    font-weight:normal;
+}
+div.storylinks {
+    margin:0pt 0pt 1.5em;
+}
+div.storylinks * {
+    line-height:110%;
+}
+div.storylinks div {
+    background:transparent url(//images.slashdot.org/storylinks-bg.png) repeat-x scroll left bottom;
+    margin:0pt;
+    padding:0pt;
+}
+div.storylinks ul {
+    background:transparent url(//images.slashdot.org/storylinks-right.png) no-repeat scroll right bottom;
+    margin:0pt;
+    padding:0.75em 12em 0.75em 0.6em;
+}
+div.storylinks ul li {
+    background:transparent none repeat scroll 0%;
+    border:medium none;
+    display:inline;
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+    padding:0pt;
+}
+div.storylinks ul li.comments {
+    background:transparent none repeat scroll 0%;
+    margin:-0.1em 0pt;
+    padding:0.1em 1em 0.2em;
+    position:absolute;
+    right:0pt;
+    text-align:right;
+    text-shadow:#000000 0pt 0pt 0pt;
+    width:11em;
+}
+div.storylinks ul li:before {
+    color:#CCCCCC;
+    content:"|";
+}
+div.storylinks ul li.more:before, div.storylinks ul li.comments:before {
+    content:" ";
+}
+div.briefarticles {
+    background:#E8E8E8 url(//images.slashdot.org/briefarticle-top-left.png) no-repeat scroll left top;
+    border-bottom:1px solid #006666;
+    margin:1.5em 0pt;
+}
+div.briefarticles div.briefarticle {
+    background:transparent url(//images.slashdot.org/briefarticle-fade.png) repeat-y scroll right top;
+    border-bottom:1px solid #CCCCCC;
+    padding:0.5em 0.7em;
+}
+div.briefarticles div.briefarticle span.storytitle a {
+    font-weight:bold;
+}
+div.future div.briefarticle {
+    background:#770000 none repeat scroll 0%;
+}
+div.future div.briefarticle a {
+    color:#FFFFFF;
+}
+a.yesterday {
+    background:transparent url(//images.slashdot.org/arrow-left.png) no-repeat scroll left center;
+    font-weight:bold;
+    padding-left:15px;
+}
+div#slashboxes {
+    float:right;
+    margin-left:1.25em;
+    position:relative;
+    width:17.25em;
+}
+div#slashboxes div.block {
+    margin-bottom:1.25em;
+    position:relative;
+}
+div#slashboxes div.block div.title h4 {
+    background:transparent url(//images.slashdot.org/block-title-right.png) no-repeat scroll right top;
+    padding:0.5em 0.8em 0.6em;
+}
+div#slashboxes div.block div.content {
+    background:#EEEEEE url(//images.slashdot.org/slashbox-bottom-left.png) no-repeat scroll left bottom;
+    padding:0.4em;
+}
+div#slashboxes div.block div.content p {
+    margin:0pt;
+}
+div#slashboxes div.block div.content ul {
+    list-style-image:none;
+    margin:0pt;
+    padding:0pt;
+}
+div#slashboxes div.block div.content ul li {
+    border-top:1px solid #DDDDDD;
+    list-style-image:none;
+    padding:0.1em 0.8em 0.3em;
+}
+div#slashboxes div.block div.right {
+    padding:0.5em 0.8em 0.6em;
+}
+div#footer {
+    background:#BBBBBB url(//images.slashdot.org/footer-bg.png) repeat-x scroll left top;
+    clear:both;
+    margin-top:1.25em;
+}
+div#footer div.search {
+    float:left;
+    padding:1.35em 0pt 0pt 1.25em;
+    white-space:nowrap;
+    width:23.25em;
+}
+div#footer div.rightcontent {
+    background:transparent url(//images.slashdot.org/footer-right.png) no-repeat scroll right top;
+    padding:1.35em 1.25em 1.5em 0pt;
+    text-align:right;
+}
+div#footer div.rightcontent table {
+    border-color:#AAAAAA rgb(255  255  255) rgb(255  255  255) rgb(170  170  170);
+    border-style:solid;
+    border-width:1px;
+    width:auto;
+}
+div#footer div.rightcontent .data_hl1 {
+    background:#EEEEEE none repeat scroll 0%;
+}
+div#footer div.rightcontent small {
+    color:#333333;
+    font-family:'Trebuchet MS',Helvetica,Arial,clean,sans-serif;
+    font-size:100%;
+    font-style:italic;
+}
+div.copyright {
+    background:#444444 url(//images.slashdot.org/copyright-bg.png) repeat-x scroll left bottom;
+    margin:0pt 1.25em 15px;
+}
+div.copyright p {
+    background:transparent url(//images.slashdot.org/copyright-left.png) no-repeat scroll left bottom;
+    color:#999999;
+    font-size:85%;
+    padding:0.85em 1.25em;
+    text-align:center;
+}
+div.copyright a {
+    color:#CCCCCC;
+}
+div.btmnav {
+    margin:0.4em 0pt;
+    text-align:center;
+}
+div.btmnav ul li {
+    display:inline;
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+}
+div.btmnav ul li a {
+    border-left:1px solid #CCCCCC;
+    color:#CCCCCC;
+    font-size:93%;
+    padding:0pt 0.4em;
+}
+div.btmnav ul li.begin a {
+    border:medium none;
+    padding:0pt 0.4em 0pt 0pt;
+}
+div.btmnav ul li a:visited {
+    color:#AAAAAA;
+}
+div#users-blocks div.title, #users div.title, #search div.title, #users-lists div.title, #subscribe div.title {
+    border-bottom:1px solid #FFFFFF;
+    margin:0pt;
+}
+#users-lists div.title {
+    margin:1em 0pt 0pt;
+}
+div#usermenu {
+    background:#E6E6E6 url(//images.slashdot.org/sections-bg.png) repeat-x scroll left bottom;
+    margin:0pt 0pt 0.5em;
+}
+ul.menu {
+    background:transparent url(//images.slashdot.org/storylinks-bg.png) repeat-x scroll left bottom;
+    font-size:93%;
+    overflow:auto;
+    padding:0.5em 0pt;
+}
+#usermenu ul.menu {
+    background:transparent url(//images.slashdot.org/sections-right.png) no-repeat scroll right bottom;
+    font-size:93%;
+    padding:0.5em 0.8em;
+}
+ul.menu li {
+    display:inline;
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+    margin:0pt;
+    padding:0pt;
+}
+ul.menu li:before {
+    color:#999999;
+    content:"|";
+}
+ul.menu li:first-child:before {
+    content:" ";
+}
+ul.menu li a {
+    padding:0pt 0.5em;
+}
+#usermenu ul.menu li a {
+    padding:0pt 0.5em;
+    text-decoration:none;
+}
+#usermenu ul.menu li a.begin, ul.menu li a.begin {
+    border:medium none;
+}
+table.data {
+    background:#DFDFDF url(//images.slashdot.org/corner-bottom-right.png) no-repeat scroll right bottom;
+    clear:none;
+}
+table.data tr.data_head {
+    font-size:93%;
+}
+table.data tr.data_head th {
+    background:#E6E6E6 url(//images.slashdot.org/sections-bg.png) repeat-x scroll left bottom;
+    border-bottom:1px solid #FFFFFF;
+    color:#444444;
+    padding:0.3em 0.5em;
+    text-align:left;
+}
+table.data tr.data_head a {
+    color:#FFFFFF;
+}
+.data_hl1 td, .data_hl2 td, .data_hl3 td {
+    padding:0.3em 0.5em;
+}
+.data_hl1 {
+    background:#F8F8F8 none repeat scroll 0%;
+}
+.data_hl2 {
+    background:#DDDDDD none repeat scroll 0%;
+}
+.data_hl3 {
+    background:#EEEEEE none repeat scroll 0%;
+}
+div#misc h2 strong, div#misc ul li strong {
+    font-weight:normal;
+}
+div#misc hr {
+    margin:1em 0pt;
+}
+div#misc ul.menu {
+    margin:0pt;
+    padding:0pt;
+}
+div#misc ul.menu li {
+    display:inline;
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+    margin:0pt;
+    padding:0pt 0.5em 0pt 0pt;
+}
+div#topics div.generaltitle {
+    margin-top:1em;
+}
+div#topics table a {
+    text-decoration:none;
+}
+div#topics table tr td {
+    border-bottom:1px solid #DDDDDD;
+    padding:1em 0pt 0.5em;
+}
+.message {
+    padding:1em;
+}
+.error {
+    color:#660000;
+    font-weight:bold;
+    padding:1em;
+}
+#authors h2 {
+    display:inline;
+}
+#authors .intro {
+    display:block;
+    margin:0.3em;
+}
+.notes, .note {
+    background:#DDDDDD none repeat scroll 0%;
+    border-top:1px solid #555555;
+    display:block;
+    font-size:93%;
+    margin:1em 0pt 0pt;
+    padding:0.5em 0.7em;
+}
+div#contents .notes ul, .note ul {
+    padding-left:1.25em;
+}
+#search div.topic {
+    display:none;
+}
+pre {
+    overflow:auto;
+    padding:0pt 0pt 0pt 1em;
+    position:relative;
+    width:93%;
+}
+.lt_tb_col {
+    background:#CCCCCC none repeat scroll 0%;
+}
+.lt_text_col {
+    color:#FFFFFF;
+}
+.sb_header {
+    color:#660000;
+    font-size:125%;
+    font-weight:bold;
+}
+.hide {
+    display:none;
+}
+.buttons {
+    text-align:right;
+}
+#users-lists {
+    clear:right;
+}
+label {
+    display:block;
+    font-weight:bold;
+    padding:1em 0pt 0pt;
+}
+label.checkbox {
+    font-weight:normal;
+}
+input.button {
+    display:inline;
+}
+div.article ul, ol {
+    margin:1em 0pt 1em 2em;
+}
+div.commentBody ul {
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:disc;
+    margin:1em 0pt 1em 2em;
+}
+#commentlisting ul {
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+}
+div.commentBody ul li, div.commentBody ul ul, div.commentBody ul li, div.commentBody ul ul, div.article ul ul, div.article ul li, ol li, ol ol {
+    background:transparent none repeat scroll 0%;
+    margin:0pt 0pt 0pt 1em;
+    padding:0pt;
+}
+ul.sub input {
+    background:transparent none repeat scroll 0%;
+    border:medium none;
+    color:#005555;
+    font-family:sans-serif;
+    margin:0pt 0pt 0pt 0.3em;
+    text-decoration:underline;
+}
+ul.sub input:hover {
+    text-decoration:none;
+}
+.sub_title, .adminfunction, .sub_info {
+    display:inline;
+    margin:0pt 1em 0pt 0pt;
+}
+.top.row {
+    border-bottom:3px solid #DDDDDD;
+    font-weight:bold;
+}
+.user .sub_title {
+    height:1.3em;
+    left:20%;
+    position:absolute;
+}
+.user .sub_info {
+    height:1.3em;
+    left:60%;
+    position:absolute;
+}
+div.submenu {
+    background:#666666 url(//images.slashdot.org/block-title-bg.png) repeat-x scroll 0%;
+    color:#FFFFFF;
+    font-size:90%;
+    padding:0.1em 0pt;
+}
+div.submenu label {
+    display:inline;
+    margin:0pt 0pt 0pt 0.8em;
+}
+div.submenu input, div.submenu select {
+    margin:0pt 1em 0pt 0pt;
+}
+div.submenu form, div.submenu fieldset {
+    margin:0pt;
+    padding:0pt;
+}
+div.sub_display div.row {
+    margin:1em 0pt;
+}
+div.storylinks ul.sub li {
+    margin:0pt;
+}
+div.storylinks ul.sub li:first-child:before, div.storylinks ul.sub li.bin:before {
+    content:" ";
+}
+.sub_info {
+    color:#999999;
+}
+div.storylinks ul li.bin {
+    background:transparent none repeat scroll 0%;
+    margin:0pt;
+    padding:0.2em 2em 0.2em 1em;
+    position:absolute;
+    right:0pt;
+    text-align:right;
+    text-shadow:#000000 0pt 0pt 0pt;
+    width:11em;
+}
+#mod_summary {
+    margin-left:auto;
+    margin-right:auto;
+}
+.topic img {
+    display:block;
+    position:relative;
+    z-index:10;
+}
+.tagmenu a {
+    cursor:pointer;
+    text-decoration:underline;
+}
+a.ac-source {
+    background-color:darkgray;
+    color:white;
+}
+#ac-select-widget {
+    background-color:lightgray;
+    display:block;
+    position:absolute;
+    width:120px;
+    z-index:9050;
+}
+#ac-select-widget.hidden, #ac-select-input.hidden {
+    display:none;
+}
+#ac-select-widget input {
+    border:2px solid lightgray;
+    margin:0pt;
+    padding:0pt;
+    width:122px;
+}
+#ac-choices {
+    width:100%;
+}
+#ac-choices .yui-ac-content {
+    background:#FFFFFF none repeat scroll 0%;
+    border:1px solid darkgray;
+    overflow:hidden;
+    width:100%;
+    z-index:9050;
+}
+#ac-choices ul {
+    display:block;
+    font-family:sans-serif;
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+    margin:0pt;
+    padding:4px 0pt 0pt;
+    width:100%;
+}
+#ac-choices li {
+    cursor:default;
+    display:block;
+    margin:0pt;
+    padding:0pt 4px;
+    white-space:nowrap;
+}
+#ac-choices li.yui-ac-highlight {
+    
+}

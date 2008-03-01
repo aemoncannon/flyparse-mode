@@ -1,0 +1,1 @@
+package aemon{class Dude{public function dude(){touch(1,2)}}}

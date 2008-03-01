@@ -1,0 +1,4 @@
+div[id="content-sub"] p span {  
+    display : block; 
+    background : url(../images/x.png) no-repeat; 
+}

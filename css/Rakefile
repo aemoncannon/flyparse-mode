@@ -1,0 +1,57 @@
+#! ruby
+
+# Copyright (c) 2007 Aemon Cannon, aemoncannon -at- gmail -dot- com
+#
+# This file is part of flyparse-mode
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+require 'fileutils'
+require '../test_helper.rb'
+
+task :parser => [] do
+  system "java org.antlr.Tool CSS.g"
+  system "mv CSSLexer.java src/emacs/flyparse/css"
+  system "mv CSSParser.java src/emacs/flyparse/css"
+end
+
+task :parser_debug => [] do
+  system "java org.antlr.Tool -debug CSS.g"
+  system "mv CSSLexer.java src/emacs/flyparse/css"
+  system "mv CSSParser.java src/emacs/flyparse/css"
+end
+
+task :compile => [:parser] do
+  system "javac src/emacs/flyparse/css/CSSParser.java src/emacs/flyparse/css/CSSLexer.java -d ../bin"
+  system "javac src/emacs/flyparse/css/CSSDriver.java -d ../bin"
+end
+
+task :debug => [:parser_debug] do
+  system "javac src/emacs/flyparse/css/CSSParser.java src/emacs/flyparse/css/CSSLexer.java -d ../bin"
+  system "javac src/emacs/flyparse/css/CSSDriver.java -d ../bin"
+end
+
+task :test => [] do
+  run_tests('./test',
+            lambda{|path| (path =~ /\.css$/ and not path =~ /\.svn/) },
+            lambda{|path| "java emacs.flyparse.css.CSSDriver #{path}" })
+end
+
+task :default => [:compile]
+
+
+
+
+
+

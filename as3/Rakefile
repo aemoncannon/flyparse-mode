@@ -1,0 +1,58 @@
+#! ruby
+
+# Copyright (c) 2007 Aemon Cannon, aemoncannon -at- gmail -dot- com
+#
+# This file is part of flyparse-mode
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+require 'fileutils'
+require '../test_helper.rb'
+
+task :parser => [] do
+  system "java org.antlr.Tool AS3.g"
+  system "mv AS3Lexer.java src/emacs/flyparse/as3"
+  system "mv AS3Parser.java src/emacs/flyparse/as3"
+end
+
+task :trace_parser => [] do
+  system "java org.antlr.Tool -trace AS3.g"
+  system "mv AS3Lexer.java src/emacs/flyparse/as3"
+  system "mv AS3Parser.java src/emacs/flyparse/as3"
+end
+
+task :compile => [] do
+  system "javac src/emacs/flyparse/as3/AS3Parser.java src/emacs/flyparse/as3/AS3Lexer.java -d ../bin"
+  system "javac src/emacs/flyparse/as3/AS3Driver.java -d ../bin"
+end
+
+task :test => [] do
+  run_tests('./test',
+            lambda{|path| (path =~ /\.as$/ and not path =~ /\.svn/) },
+            lambda{|path| "java emacs.flyparse.as3.AS3Driver #{path}" })
+end
+
+task :profile => [] do
+  system "java -javaagent:c:/java_profile/profile/profile.jar emacs.flyparse.as3.AS3Driver ./test/input.as"
+end
+
+task :trace => [:trace_parser, :compile]
+
+task :default => [:parser, :compile]
+
+
+
+
+
+

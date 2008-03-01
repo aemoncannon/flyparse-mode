@@ -1,0 +1,128 @@
+#ape{
+    background-image: url(/images/main_grad.jpg);
+}
+
+#main {
+    margin: 0px 0px 0px 0px;
+    padding: 1px 0px 150px 1px;
+}
+
+#contentPanel { 
+    /*The central content panel*/
+}
+
+#addFavoriteLink{
+    left: 650px;
+    position: absolute;
+    top: -110px;
+}
+
+#commentsPanel {
+    width: 470px;
+}
+
+#addCommentPanel {
+    left: 495px;
+}
+
+#myCommentsPanel {
+    width: 100px;
+}
+
+#moneyDisplay {
+    color: #60A15F;
+    font-size: 130%;
+    left: 700px;
+    position: absolute;
+    text-align: center;
+    top: 20px 10px 10px 2px;
+}
+
+#farmProposalsPanel{
+    left: 0px;
+    left: 0px;
+    position: absolute;
+    top: 385px;
+    width: 155px;
+}
+
+#foreignFavoriteFarmsPanel{
+    left: 0px;
+    position: absolute;
+    top: 385px;
+    width: 155px;
+}
+
+#favoriteFarmsPanel{
+    left: 575px;
+    position: absolute;
+    top: 475px;
+    width: 210px;
+}
+
+#creatureInspectorPanel {
+    left: 0px;
+    position: absolute;
+    top: 20px;
+    width: 155px;
+}
+
+
+#foreignCreatureFarm{
+    height: 450px;
+    left: 155px;
+    position: absolute;
+    top: 150px;
+    width: 635px;
+}
+
+#creatureFarm{
+    height: 450px;
+    left: 155px;
+    margin: 0px 70px 0px 5px;
+    position: relative;
+    width: 635px;
+}
+
+#footerPanel {
+    margin: 0px 70px 0px 5px;
+}
+
+#storePanel {
+    margin: 0px 0px 0px 8px;
+}
+
+#faqPanel {
+    margin: 0px 0px 0px 8px;
+}
+
+#newsPanel{
+    margin: 0px 0px 0px 8px;
+}
+
+#mainMenu {
+    left: 30px;
+}
+
+#cb_logo {
+    left: 2px;
+    position: absolute;
+    top: 3px;
+    visibility: hidden;
+}
+
+
+#right_flowers {
+    left: 600px;
+    position:absolute;
+    top: 200px;
+    visibility: hidden;
+}
+
+
+#top_left_fuzzy{
+    position: absolute;
+    top: 29px;
+    visibility: hidden;
+}
+

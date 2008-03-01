@@ -1,0 +1,1679 @@
+/********************** GLOBAL_ATTRIBUTES ******************/
+body {
+    font-family: arial, "lucida console", sans-serif;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    background-image: url(/images/dots_bg.jpg);
+
+}
+
+ul {
+    color: #FFF9BC;
+    font-size: 75%;
+}
+
+
+p {
+    color: #FFF9BC;
+    font-size: 75%;
+}
+
+b {
+    color: #FFF9BC;
+    font-size: 90%;
+}
+
+form {
+    color: #FFF9BC;
+    font-size: 75%;
+}
+
+a:link, a:visited, a:active { 
+    /*The global appearance of hyperlinks*/
+    color: #FFF9BC;
+    font-size: 95%;
+    font-weight: bold;
+    outline: none;
+    text-decoration: none;
+}
+a:hover {
+    color: #FFFFFF;
+    font-size: 95%;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.dottedDivider {
+    background-image:  url(/images/dottedDividerRepeat.gif);
+    background-repeat: repeat-x;
+    height: 7px;
+    margin: 30px 60px 30px 0px;
+}
+
+.formSubmitButton{
+    text-align: right;
+}
+
+.attributes {
+    color: #FFF9BC;
+    font-size: 75%;
+}
+
+.formNotice { 
+    /*this is the red text that informs the user of incorrect form data */
+    color: #FC9494;
+    font-size: 75%;
+    padding: 10px 10px 10px 10px;
+}
+.userNotice { 
+    /*this is the red text that informs the user of incorrect form data */
+    color: #FC9494;
+    font-size: 110%;
+    padding: 10px 10px 10px 10px;
+}
+.controlPanel{
+    background-color: #597E66;
+    padding: 0px 0px 10px 0px;
+}
+
+.panelContent{
+    background-color: #486D55;
+    overflow: auto;
+    padding: 1px 5px 1px 5px;
+}
+.panelHeader{
+    background-color: #597E66;
+    color: #FFD210;
+    font-weight: 300;
+    padding: 0px 5px 0px 5px;
+    text-align: center;
+}
+
+.utilityForm b{
+}
+
+.utilityForm input,.utilityForm select {
+    width: 120px;
+}
+
+.utilityForm input {
+    background-color: #DDDDDD;
+    border: 1px solid #AAAAAA;
+}
+
+.utilityForm select {
+    background-color: #DDDDDD;
+    border: 1px solid #AAAAAA;
+}
+
+.hasControls {
+    padding: 10px 0px 15px 0px;
+}
+
+.hasControls .subControlPanel {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    width: 130px;
+}
+
+
+.hasControls .shinyButton {
+    display: block;
+    margin: 20px auto 0px auto;
+    text-align: center;
+    width: 130px;
+}
+
+.hasControls .subControlPanel .shinyButton {
+    display: block;
+    text-align: center;
+    width: auto;
+}
+
+.hasControls .subControlPanel select{
+    background-color: #DDDDDD;
+    border: 1px solid #AAAAAA;
+    width: 130px;
+}
+
+.hasControls .subControlPanel input{
+    background-color: #DDDDDD;
+    border: 1px solid #AAAAAA;
+    width: 99px;
+}
+
+.subControlPanel{
+    background-color: #5D866B;
+    border: 1px solid #557F64;
+    color: #ffffff;
+    margin: 5px 5px 5px 5px;
+    overflow: auto;
+    padding: 5px 5px 5px 5px;
+    text-align: left;
+}
+
+.shinyButton{
+    /*margin: 7px 0px 7px 5px;*/
+    
+}
+.shinyButton:link, .shinyButton:active, .shinyButton:visited {
+    background-color: #DDDDDD;
+    border-bottom: 1px solid #BBBBBB;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #BBBBBB;
+    border-top: 1px solid #FFFFFF;
+    color: #444444;
+    font-size: 75%;
+    height: 15px;
+    padding: 4px 8px 4px 8px;
+}
+
+.shinyButton:hover{
+    background-color: #CCCCCC;
+    color: #444444;
+    font-size: 75%;
+}
+
+.disabledButton:link, .disabledButton:active, .disabledButton:visited, .disabledButton:hover{
+    background-color: #DDDDDD;
+    border-bottom: 1px solid #BBBBBB;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #BBBBBB;
+    border-top: 1px solid #FFFFFF;
+    color: #888888;
+    font-size: 75%;
+    height: 15px;
+    padding: 4px 8px 4px 8px;
+}
+.attributes b{
+}
+
+
+.insetPanel {  
+    background-color: #85C666;
+    text-align: center;
+}
+.insetPanel p{
+    font-size: 85%;
+    margin: 10px 10px 10px 10px;
+}
+
+
+/********************** IMAGES ******************/
+
+#headerImage {
+}
+
+#cb_logo {
+    left: 544px;
+    position: absolute;
+    top: 23px;
+}
+#right_flowers {
+    
+    left: 760px;
+    position:absolute;
+    top: 140px;
+}
+
+#top_left_fuzzy{
+    left: 20px;
+    position:absolute;
+    top: 29px;
+}
+#the_wild_logo{
+    margin-left: 165px;
+    
+}
+/********************** BIG_PANELS ******************/
+
+
+#mainPanel {
+    /*outter most panel, contains all content*/
+    background-color: #69AA61;
+    background-image: url(/images/bg_gradient.jpg);
+    background-repeat: repeat-x;
+    border-bottom: 1px solid #FF9F51;
+    left: 50%;
+    margin: 0px 0px 10px -480px;
+    padding: 0px 0px 0px 0px;
+    position:absolute;
+    top: 10px;
+    width: 960px;
+}
+
+#main {
+    margin: 0px 0px 0px 0px;
+    padding: 1px 0px 200px 1px;
+}
+#contentPanel { 
+    /*The central content panel*/
+    background-color: #91DD6C;
+    margin: 0px 0px 0px 70px;
+    padding: 0px 0px 0px 0px;
+    position: relative;
+    top: 96px;
+    width: 810px;
+}
+
+#contentForProposal{
+    height: 930px;
+}
+#contentForFindMate{
+    height: 930px;
+}
+
+#contentForFarm{
+    height: 805px;
+}
+#contentForForeignFarm{
+    height: 830px;
+}
+#contentForCreature{
+    padding: 5px 1px 120px 1px;
+    
+}
+#contentForIndex{
+    background-image: url(/images/gradient.jpg);
+    background-repeat: repeat-x;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    top: 0px;
+}
+
+
+
+#contentForEvent{
+    margin: 0px 0px 0px 0px;
+    padding: 15px 0px 15px 0px;
+    text-align: center;
+}
+#contentForStore{
+    margin: 0px 0px 0px 0px;
+    padding: 15px 0px 15px 0px;
+    text-align: center;
+}
+#contentForEventListing{
+    background-image: url(/images/home_bg.jpg);
+    background-repeat: repeat;
+    height: 600px;
+    padding: 1px 0px 0px 0px;
+}
+
+/***************** NOTIFIER *********************/
+
+#notifier {
+    background-color: #ffffff;
+    border-bottom: 2px solid #FC9494;
+    border-top: 2px solid #FC9494;
+    height: 40px;
+    overflow: auto;
+    padding-top: 10px;
+    position: absolute;
+    text-align: center;
+    top: -2px;
+    width: 100%;
+}
+
+#notifier b {
+    color: #FC9494;
+}
+
+#notifier .error {
+    color: #FC9494;
+    margin-left: 10px;
+}
+
+#notifier .notice {
+    color: #000000;
+    margin-left: 10px;
+}
+
+
+
+/********************** MENU_BAR ******************/
+
+
+
+#menuBar {
+    /*This is the horizontal list of links on top*/
+    height: 39px;
+    left: 128px;
+    margin: 54px 0px 0px 0px;
+    position: absolute;
+    text-align: center;
+    top:  -80px;
+    width: 350px;
+}
+
+#selectFarmForm b{
+    font-size: 110%;
+}
+
+#selectFarmForm select{
+    background-color: #EEEEEE;
+    border: 1px solid #659c63;
+    margin-left: 10px;
+    width: 150px;
+}
+
+
+#menuBar ul {
+    list-style: none;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+#menuBar a:link, #menuBar a:visited{
+    color: #006699;
+    font-size: 110%;
+}
+
+#menuBar a:hover{
+    color: #0099FF;
+    text-decoration: none;
+}
+
+#menuBar li {
+    color: #0099BB;
+    display: inline;
+    list-style-type: circle;
+}
+
+#footerPanel {  
+    margin: 0px 70px 0px 90px;
+    position: relative;
+    top: 103px;
+}
+
+#footerPanel p{  
+    color: #467744;
+    position: absolute;
+    width: 800px;
+}
+#footerPanel a{
+    color: #467744;
+}
+/********************** MAIN_MENU ******************/
+
+#mainMenu {
+    /*This is the horizontal list of links on top*/
+    font-size: 100%;
+    height: 20px;
+    left: 23px;
+    position: absolute;
+    top: 5px;
+    width: 900px;
+}
+#mainMenu ul {
+    list-style: none;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+#mainMenu a:link, #mainMenu a:visited{
+    color: #467744;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+#mainMenu a:hover{
+    color: #83C48F;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    text-decoration: none;
+}
+
+#mainMenu li {
+    color: #60A15F;
+    display: inline;
+    list-style-type: none;
+    margin: 0px 10px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    position: relative;
+}
+
+
+/********************** FARM_PAGE ******************/
+
+
+#foreignCreatureFarm{  
+    /*this contains the flash movie for another persons farm*/
+    height: 450px;
+    left: 160px;
+    position:absolute;
+    top: 150px;
+    width: 635px;
+}
+
+#creatureFarm{  
+    /*this contains the flash movie for the farm*/
+    height: 450px;
+    left: 160px;
+    position:relative;
+    top: 10px;
+    width: 635px;
+}
+
+#welcomePanel{
+    background-color: #ffffff;
+    border: 2px solid #60a15f;
+    height: 100px;
+    left: 161px;
+    overflow: auto;
+    padding: 5px 5px 5px 5px;
+    position: absolute;
+    top: 12px;
+    width: 615px;
+    
+}
+#welcomePanel b {
+    color: #222222;
+}
+#welcomePanel p {
+    color: #222222;
+    margin-left: 10px;
+}
+
+#farmProposalsPanel{
+    left: -71px;
+    position: absolute;
+    top: 385px;
+    width: 220px;
+}
+#farmProposals{
+    height: 165px;
+    padding: 5px 0px 0px 0px;
+}
+#farmProposals ul{
+    margin: 0px 0px 0px 0px;
+    padding: 5px 20px 0px 25px;
+}
+#farmProposals li{
+    margin: 10px 0px 0px 0px;
+}
+
+.breedingProposalListItem {
+    list-style-image: url(/images/heart_bullet.jpg);
+}
+
+.purchaseProposalListItem {
+    list-style-image: url(/images/dollar_bullet.jpg);
+}
+
+.giftProposalListItem {
+    list-style-image: url(/images/gift_bullet.jpg);
+}
+
+#favoriteFarmsPanel{
+    left: 580px;
+    position: absolute;
+    top: 475px;
+    width: 220px;
+}
+
+#favoriteFarms{
+    height: 75px;
+    margin: 0px 0px 0px 0px;
+    padding: 3px 0px 0px 0px;
+}
+#favoriteFarms ul a:link, #favoriteFarms ul a:visited, #favoriteFarms ul a:active {
+    font-size: 80%;
+}
+
+#favoriteFarmsList  .abandoned:link, #favoriteFarmsList  .abandoned:visited, #favoriteFarmsList  .abandoned:active {
+    color: #C8C391;
+}
+
+#favoriteFarmsList  .stagnant:link, #favoriteFarmsList  .stagnant:visited, #favoriteFarmsList  .stagnant:active {
+    color: #E0DBA4;
+}
+
+#favoriteFarmsList  .notActive:link, #favoriteFarmsList  .notActive:visited, #favoriteFarmsList  .notActive:active {
+    color: #EDE8B0;
+}
+
+#favoriteFarmsList  .active:link, #favoriteFarmsList  .active:visited, #favoriteFarmsList  .active:active {
+    color: #FFF9BC;
+}
+
+
+#favoriteFarms ul {
+    list-style-image: url(/images/star-bullet.gif);
+}
+
+#favoriteFarms ul li{
+    margin-bottom: 5px;
+}
+
+
+
+
+#foreignFavoriteFarmsPanel{
+    left: -71px;
+    position: absolute;
+    top: 385px;
+    width: 220px;
+}
+
+#foreignFavoriteFarms{
+    height: 155px;
+    margin: 0px 0px 0px 0px;
+    padding: 3px 0px 0px 0px;
+}
+
+#foreignFavoriteFarms ul{
+    list-style-image: url(/images/star-bullet.gif);
+}
+
+#foreignFavoriteFarms ul li{
+    margin-bottom: 5px;
+}
+
+.deleteLink:link, .deleteLink:visited, .deleteLink:active { 
+    color: #F2918C;
+}
+
+.deleteLink:hover {
+    color: #F7B9B7;
+}
+
+#addFavoriteLink{
+    left: 812px;
+    position: absolute;
+    top: -60px;
+}
+
+#moneyDisplay {
+    color: #467744;
+    font-size: 130%;
+    left: 860px;
+    position: absolute;
+    text-align: center;
+    top: 10px;
+}
+
+
+
+
+
+
+/********************** EVENT_LISTING_PAGE ******************/
+#home_mounds{
+    left: 10px;
+    position:relative;
+    top: 230px;
+}
+#home_path{
+    left: 212px;
+    position:relative;
+    top: 220px;
+}
+
+#headlinePanel{
+    background-color: #9A7A59;
+    background-repeat: repeat;
+    border: 2px solid #D98638;
+    font-size: 75%;
+    height: 250px;
+    left: 15px;
+    padding: 5px 5px 5px 5px;
+    position: relative;
+    top: -365px;
+    width: 560px;
+}
+#headlinePanelContent{
+    background-color: #AB8B6A;
+    height: 160px;
+    margin: 0px 5px 0px 5px;
+    overflow: auto;
+}
+#headlinePanelContent p{
+    color: #FFFAD7;
+    margin: 0px 15px 20px 15px;
+}
+#headlinePanelContent b{
+    color: #FFFAD7;
+}
+#headlinePanelContent img{
+    margin: 0px 0px 0px 15px;
+}
+#headlinePanelContent ul{
+    font-size: 100%;
+    list-style-image: url(/images/star-bullet.gif);
+    margin-left: 5px;
+}
+#headlinePanelContent li{
+    font-size: 100%;
+    margin-top: 20px;
+}
+#headlinePanelHeading{
+    color: #FFF9BC;
+    margin-left: 100px;
+}
+#headlinePanelContent a:link, #headlinePanel a:visited, #headlinePanel a:active { 
+    color: #FFF9BC;
+    font-size: 95%;
+}
+#headlinePanelContent a:hover {
+    color: #E6A527;
+    font-size: 95%;
+}
+#woodPostL{
+    background-color: #F5DE73;
+    border-left: 2px solid #D89E68;
+    border-right: 2px solid #D89E68;
+    height: 85px;
+    left: 100px;
+    position: absolute;
+    top: 265px;
+    width: 20px;
+}
+
+#woodPostR{
+    background-color: #F5DE73;
+    border-left: 2px solid #D89E68;
+    border-right: 2px solid #D89E68;
+    height: 85px;
+    left: 470px;
+    position: absolute;
+    top: 265px;
+    width: 20px;
+}
+
+
+#featuredFarmsPanel{
+    left:15px;
+    position: absolute;
+    top:370px;
+    width:220px;
+}
+#featuredFarms{ /*Only on the 'Home page'*/
+    height: 120px;
+}
+#featuredEventsPanel{
+    left:575px;
+    position: absolute;
+    top:370px;
+    width: 220px;
+}
+#featuredEvents{
+    height: 120px;
+}
+/********************** HOME_PAGE ******************/
+#welcomeFlash{
+    border: 2px solid #D98638;
+    width: 750px;
+}
+
+#lowerAdvert{
+    border: 2px solid #D98638;
+}
+
+#home_path{
+    left: 212px;
+    position:relative;
+    top: 220px;
+}
+
+#indexTable{ 
+    margin: 0px 0px 0px 4px;
+    padding: 0px 0px 0px 0px;
+    width: 800px;
+}
+
+#indexTable td{
+    background-color: #E8FE75;
+    border: 2px solid #FFD210;
+    overflow: hidden;
+    vertical-align: top;
+    width: 266px;
+}
+#indexTable p{
+    color: #467744;
+    font-family: Arial;
+    font-size: 8pt;
+    font-weight: bold;
+}
+#indexTable .tableLinks:link, .tableLinks:visited, .tableLinks:active { 
+    color: #000000;
+    font-size: 115%;
+    font-weight: bold;
+    outline: none;
+    text-decoration: none;
+}
+#indexTable .tableLinks:hover {
+    color: #FF6D2C;
+    font-family: Arial;
+    font-size: 115%;
+    font-weight: bold;
+    text-decoration: none;
+}
+#indexTable h2{
+    color: #000000;
+    font-family: Comic Sans MS;
+    font-weight: bold;
+    text-align: center;
+}
+#indexTable h3{
+    color: #467744;
+    font-family: Comic Sans MS;
+    font-weight: bold;
+    text-align: center;
+}
+#indexTable h4{
+    color: #467744;
+    font-family: Comic Sans MS;
+    font-weight: bold;
+    text-align: center;
+}
+#indexTable b{
+    color: #000000;
+    font-family: Comic Sans MS;
+    font-size: small;
+}
+
+#indexTable .newsItem a{
+    color: #E75A08;
+    font-family: Comic Sans MS;
+}
+
+#indexTable .newsItem{
+    color: #467744;
+    font-family: Arial;
+    font-size: 8pt;
+    overflow: hidden;
+    width: 250px;
+}
+
+
+
+#indexTable .newsTitle{
+    color: #000000;
+    font-family: Arial;
+    font-size: 10pt;
+    font-weight: bold;
+}
+/********************** CREATURE_INSPECTOR_STUFF ******************/
+
+
+.attributes td {
+    padding-right: 10px;
+    padding-top: 15px;
+}
+#heredityTable td{
+    padding-top: 0px;
+}
+
+#viewCreatureViewer {  
+    background-color: #85C666;
+    left: 440px;
+    position: absolute;
+    text-align: center;
+    top: 20px;
+    width: 340px;
+}
+
+#creatureInspectorPanel { 
+    /*The descriptive panel that appears when a creature is clicked*/
+    left: -71px;
+    position: absolute;
+    top: 20px;
+    width: 220px;
+}
+
+#creatureInspector {
+    height: 320px;
+    overflow: hidden;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+#creatureInspector .attributes{
+    height: 270px;
+    overflow: hidden;
+}
+
+
+#creatureInspectorCloserPanel {
+    left: 20px;
+    position: relative;
+    top: 10px;
+    width: 400px;
+}
+#creatureInspectorCloser {
+    overflow: hidden;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+#creatureInspectorCloser .breedingProposalListItem {
+    list-style-image: url(/images/light_heart_bullet.jpg);
+}
+
+#creatureInspectorCloser .purchaseProposalListItem {
+    list-style-image: url(/images/light_dollar_bullet.jpg);
+}
+
+
+#creatureControlsPanel { 
+    /*The descriptive panel that appears when 'look closer' is clicked*/
+    left: 440px;
+    position: absolute;
+    top: 250px;
+    width: 340px;
+}
+
+.genomeScroller{
+    height: 100px;
+}
+
+#proposalsPanel{
+    height: 50px;
+    
+}
+
+
+/********************** FARM_PAGE_SYSTEM_MESSAGES ******************/
+#systemMessagesPanel{
+    left: 165px;
+    position: absolute;
+    top: 475px;
+    width: 400px;
+}
+#systemMessages{
+    height: 80px;
+    padding: 0px 0px 0px 0px;
+}
+
+.messageOdd{
+    background-color: #486D55;
+    padding: 5px 0px 5px 15px;
+}
+.messageEven{
+    background-color: #446650;
+    padding: 5px 0px 5px 15px;
+}
+.messageTime{
+    color: #DDD7BA;
+    font-size: 65%;
+    padding: 5px 0px 5px 15px;
+}
+
+/********************** FARM_PAGE_COMMENTS ******************/
+#commentsPanel{
+    left: 10px;
+    position: absolute;
+    top: 610px;
+    width: 490px;
+}
+
+#myCommentsPanel{
+    /*wider comment panel for my_farm*/
+    left: 10px;
+    position: absolute;
+    top: 598px;
+    width: 790px;
+}
+
+#addCommentPanel{
+    left: 510px;
+    position: absolute;
+    top: 610px;
+    width: 290px;
+}
+
+#addComment{
+    height: 185px;
+    text-align: center;
+}
+
+
+#addComment .shinyButton {
+    padding: 5px 30px 5px 30px;
+}
+
+#myComments{
+    /*wider comment panel for my_farm*/
+    height: 173px;
+    padding: 0px 0px 0px 0px;
+    
+}
+#comments{
+    height: 185px;
+    padding: 0px 0px 0px 0px;
+    
+}
+
+.loadingMsg {
+    color: #FFF9BC;
+    font-size: 80%;
+    padding: 10px 5px 0px 15px;
+}
+.smallLoadingMsg {
+    color: #FFF9BC;
+    font-size: 80%;
+    padding: 2px 5px 0px 5px;
+}
+
+#blank{
+    left: 25px;
+    position: absolute;
+    top: 300px;
+    width: 75px;
+}
+
+.comment{
+    border-width: 0px;
+    left: 0px;
+    margin-left: 0px;
+    
+}
+.comment img{
+    background-color: #ffffff;
+    border: 1px solid #DDD7BA;
+}
+.comment p{
+    
+    padding: 0px 5px 0px 15px;
+}
+.commentInfo{
+    color: #DDD7BA;
+    font-size: 65%;
+    margin-left: 15px;
+}
+.commentOdd{
+    background-color: #486D55;
+    padding: 5px 0px 5px 0px;
+}
+.commentEven{
+    background-color: #446650;
+    padding: 5px 0px 5px 0px;
+}
+/********************** FIND_MATE_PAGE ******************/
+
+#contentForFindMate #mate1View{
+    left: 70px;
+    position: absolute;
+    top: 50px;
+}
+
+#contentForFindMate #viewingMateView{
+    left: 540px;
+    position: absolute;
+    top: 50px;
+}
+#selectCreatureForm{
+    left: 550px;
+    position: absolute;
+    top: 60px;
+}
+#selectCreatureForm select {
+    width: 140px;
+}
+
+/********************** BREEDING_PROPOSAL_PAGE ******************/
+#heart{
+    left: 390px;
+    position:absolute;
+    top: 120px;
+}
+#mate1View{
+    left: 70px;
+    position: absolute;
+    top: 50px;
+    width: 200px;
+}
+#mate2View{
+    left: 540px;
+    position: absolute;
+    top: 50px;
+    width: 200px;
+}
+
+#proposalCreatureViewPanel{
+    left: 70px;
+    position: absolute;
+    top: 280px;
+    width: 300px;
+}
+#proposalCreatureView2Panel{
+    left: 440px;
+    position: absolute;
+    top: 280px;
+    width: 300px;
+}
+#proposalCreatureView{
+    height: 440px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+#proposalCreatureView2{
+    height: 440px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+#proposalButtons {
+    background-image: url("/images/big_heart.gif");
+    background-position: center;
+    background-repeat: no-repeat;
+    left: 280px;
+    position: absolute;
+    top: 50px;
+    width: 250px;
+}
+#proposalButtons p{
+    height: 130px;
+    padding-top: 50px;
+}
+
+#proposalButtons .shinyButton{
+    display: block;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    width: 120px;
+}
+
+
+/********************** GIFT_PROPOSAL_PAGE ******************/
+
+#contentForGiftProposal {
+    padding: 20px 0px 400px 0px;
+    text-align: center;
+}
+
+#giftControlsPanel{
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 100px;
+    width: 300px;
+}
+
+#giftControlsPanel a{
+}
+
+#giftControlsPanel #giftTitle{
+    margin-bottom: 80px;
+}
+
+#giftControlsPanel #giftList{
+    list-style-type: none;
+    margin-left: -40px;
+    position: relative;
+}
+
+#giftControlsPanel #giftList .giftCreature {
+}
+
+#giftControlsPanel #giftList .giftAccessory {
+}
+
+#giftControlsPanel #giftList .giftGroupArity {
+    color: #55904D;
+    float: left;
+    font-size: 100%;
+    margin: 50px 0px 0px 20px;
+}
+
+#giftControlsPanel #giftList .giftCreatureName {
+    color: #55904D;
+    float: left;
+    font-size: 100%;
+    margin: 110px 0px 0px 20px;
+}
+
+
+
+/********************** PURCHASE_PROPOSAL_PAGE ******************/
+#contentForPurchaseProposal {
+    padding: 20px 0px 10px 0px;
+    text-align: center;
+}
+
+#purchaseControlsPanel{
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+}
+
+#purchaseCreaView{
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+}
+
+#purchaseCreatureViewPanel{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    width: 300px;
+}
+
+#purchaseCreatureView{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+/********************** EVENT_PAGE ******************/
+
+#eventPanel{
+    background-color: #886A4E;
+    border: 2px solid #D98638;
+    margin: 0px 0px 0px 15px;
+    padding: 10px 5px 150px 5px;
+    text-align: center;
+    width: 763px;
+}
+#missPlaque{
+    display: inline;
+}
+#eventDescription{
+    margin-top: -15px;
+    text-align: center;
+}
+#eventDescription p{
+    font-size: 100%;
+}
+#entryTable{
+    margin-left: auto;
+    margin-right: auto;
+}
+#entryTable td{
+    background-color: #9B7A59;
+    border: 1px solid #D98638;
+    color: #FFF9BC;
+    padding: 5px 5px 5px 5px;
+    width: 220px;
+}
+#entryTable td b{
+    color: #FFF9BC;
+}
+#voteButton{
+    font-size: 120%;
+    font-weight: 800;
+}
+
+#pageControls{
+    text-align: center;
+    width: 100%;
+}
+
+#enterCreaturePanel{
+    border: 1px solid #D98638;
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+}
+#enterCreature{
+    padding: 1px 0px 1px 10px;
+}
+#enterCreatureHeader{
+    background-color: #9B7A59;
+}
+/********************** STORE_PAGE ******************/
+
+#storePanel{
+    background-color: #886A4E;
+    border: 2px solid #D98638;
+    margin: 0px 0px 0px 15px;
+    padding: 10px 5px 150px 5px;
+    text-align: center;
+    width: 763px;
+}
+
+#storePanel #currentCategory a{
+    color: #ffffff;
+}
+
+#storeDescription{
+    margin-top: -15px;
+    text-align: center;
+}
+#storeDescription p{
+    font-size: 100%;
+}
+
+.moneyUnit {
+    font-size: 75%;
+    margin-left: 5px;
+}
+
+#storePageControls{
+    text-align: center;
+}
+
+#storePageControls #prevEntriesLink{ 
+    width: 240px;
+}
+
+#storePageControls #allEntriesLinks{ 
+    width: 260px;
+}
+
+#storePageControls #nextEntriesLink{ 
+    width: 250px;
+}
+
+#storePageControls #selectedPageLink{ 
+    font-size: 70%;
+}
+
+#itemTable{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+#itemTable td{
+    background-color: #9B7A59;
+    border: 1px solid #D98638;
+    color: #FFF9BC;
+    padding: 5px 5px 5px 5px;
+    text-align: center;
+    width: 220px;
+}
+
+.purchaseForm input {
+    width:30px;
+}
+
+.purchaseForm select {
+    width: 40px;
+}
+
+.purchaseForm {
+}
+
+#itemTable td b{
+    color: #FFF9BC;
+}
+#purchaseButton{
+    font-size: 120%;
+    font-weight: 800;
+}
+#categoryTable {
+    text-align: center;
+    width: 100%;
+}
+
+/*******FIND A FARM*******/
+#contentForFindAFarm .panel {
+    background-color: #486D55;
+    border: 1px solid #FFD210;
+    color: #FFF9BC;
+    font-size: 76%;
+    margin: 10px 150px 20px 150px;
+    padding: 10px 10px 10px 10px;
+}
+
+#contentForFindAFarm{
+    padding: 20px 0px 200px 0px;
+}
+#contentForFindAFarm ul{
+    font-size: 100%;
+}
+#contentForFindAFarm ul li{
+    margin-bottom: 10px;
+}
+
+/*******FAMILY TREE******/
+
+#contentForFamilyTree{
+    height: 700px;
+}
+#contentForFamilyTree #creature {
+    left: 305px;
+    position: absolute;
+    top: -10px;
+}
+#contentForFamilyTree #mommy{
+    left: 145px;
+    position: absolute;
+    top: 190px;
+}
+#contentForFamilyTree #daddy{
+    left: 455px;
+    
+}
+#contentForFamilyTree #momsMom{
+    left: 45px;
+    position: absolute;
+    top: 400px;
+}
+#contentForFamilyTree #momsDad{
+    left: 225px;
+    position: absolute;
+    top: 400px;
+}
+#contentForFamilyTree #dadsMom{
+    left: 365px;
+    position: absolute;
+    top: 400px;
+}
+#contentForFamilyTree #dadsDad{
+    left: 555px;
+    position: absolute;
+    top: 400px;
+}
+#contentForFamilyTree .nameLabel{
+    color: #69a660;
+    left: 75px;
+    position: absolute;
+    top: 170px;
+}
+
+#contentForFamilyTree #arrows1 {
+    left: 345px;
+    position: absolute;
+    top: 190px;
+}
+
+#contentForFamilyTree #arrows2{
+    left: 185px;
+    position: absolute;
+    top: 400px;
+}
+
+#contentForFamilyTree #arrows3 {
+    left: 495px;
+    position: absolute;
+    top:  400px;
+}
+
+/********SETTINGS**********/
+
+#contentForSettings{
+    padding: 25px 0px 20px 0px;
+}
+
+#contentForSettings form{
+    background-color: #486D55;
+    border: 1px solid #FFD210;
+    color: #FFF9BC;
+    margin: 15px 150px 0px 150px;
+    padding: 10px 10px 10px 10px;
+}
+
+#updateEmailForm input{ 
+    width: 200px;
+}
+
+#blockUserForm ul{
+    font-size: 100%;
+}
+
+/********FAQ**********/
+
+#helpMenuCell {
+    padding-left: 265px;
+}
+
+#faqTurtle {
+    margin: 5px 20px 10px 55px;
+}
+
+#contentForFaq{
+    margin: 0px 0px 0px 0px;
+    padding: 15px 0px 15px 0px;
+    text-align: center;
+}
+
+#faqList {
+    font-size: 90%;
+    list-style-type: none;
+    margin: 20px 50px 0px 20px;
+}
+
+#faqList li {
+    margin-bottom: 50px;
+}
+
+#faqList li p {
+    color: white;
+    font-size: 90%;
+}
+
+#faqPanel {
+    background-color: #886A4E;
+    border: 2px solid #D98638;
+    margin: 0px 0px 0px 15px;
+    padding: 10px 5px 150px 5px;
+    text-align: left;
+    width: 763px;
+}
+
+/******* MANAGE FARMS ******/
+
+#contentForManageFarms{
+    padding: 10px 0px 200px 55px;
+}
+
+#contentForManageFarms #farmTable{
+}
+
+#contentForManageFarms .farmHeading a{
+    color: #486d55;
+    font-size: 95%;
+}
+
+
+#dropTable {
+    width: 590px;
+}
+
+.dropControl{
+    text-align: center;
+    width: 190px;
+}
+
+.dropControl ul{
+    list-style: none;
+    margin: 5px 10px 20px 10px;
+    padding: 0px 0px 0px 0px;
+}
+
+.dropControl b {
+    color: #9CED74;
+}
+
+.welcomeTextArea {
+    width: 300px;
+}
+
+.farmPanelNotice {
+    color: #9C1F1F;
+    font-size: 70%;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+#orphanAccessories {
+    padding: 15px 0px 15px 0px;
+}
+
+
+#currentGift, #salePanel{
+    padding: 10px 0px 10px 0px;
+}
+
+#currentGift a, #salePanel a{
+    color: #CCF2F3;
+}
+
+.creature, .accessory {
+    margin: auto;
+    outline: none;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    z-index: 1000;
+}
+
+.creature span, .accessory span{
+    color: #FFF9BC;
+    cursor: pointer;
+    cursor: hand;
+    outline: none;
+}
+
+.farmManagementPanel {
+    
+}
+.farmManagementPanelContent{
+    text-align: center;
+    width: 300px;
+}
+
+.farmManagementPanel ul{
+    list-style: none;
+    margin: auto;
+    padding: 0px 0px 0px 0px;
+    z-index: 1000;
+}
+
+.farmManagementPanel table{
+    margin: auto;
+    z-index: 1000;
+}
+
+.farmManagementPanel b{
+    color: #FFF9BC;
+    
+}
+
+#farmsControlsPanel {
+    margin-left: 250px;
+    width: 200px;
+}
+
+#contentForManageFarms .deleteLink:link,
+#contentForManageFarms .deleteLink:active,
+#contentForManageFarms .deleteLink:visited
+{
+    color: #9C1F1F;
+    font-size: 75%;
+}
+#contentForManageFarms .deleteLink:hover
+{
+    color: #F95050;
+    font-size: 75%;
+}
+
+/******* VISIT WILD ******/
+
+#contentForVisitWild{
+    padding: 10px 0px 84px 84px;
+}
+
+#worldViewer {
+    width: 635px;
+}
+/*******NEW USERS*******/
+
+#contentForNewUser{
+    padding: 25px 0px 300px 0px;
+}
+
+#newUserForm{
+    background-color: #486D55;
+    border: 1px solid #FFD210;
+    color: #FFF9BC;
+    margin: 70px 150px 0px 150px;
+    padding: 10px 10px 10px 10px;
+}
+
+#newUserForm #emailField{
+    width: 170px;
+}
+
+
+#newUserFuzzy{
+    margin: 0px 20px 0px 60px;
+}
+
+
+/********LOGIN**********/
+
+#contentForLogin{
+    padding: 25px 0px 300px 0px;
+}
+
+#contentForLogin #loginForm{
+    background-color: #486D55;
+    border: 1px solid #FFD210;
+    color: #FFF9BC;
+    margin: 70px 150px 0px 150px;
+    padding: 10px 10px 10px 10px;
+}
+
+#contentForLogin #turtleLoginImage{
+    margin: 0px 20px 0px 60px;
+}
+
+/********LOGIN**********/
+
+#contentForRecoverPassword{
+    padding: 25px 0px 300px 0px;
+}
+
+#contentForRecoverPassword #recoverPasswordForm{
+    background-color: #486D55;
+    border: 1px solid #FFD210;
+    color: #FFF9BC;
+    margin: 70px 150px 0px 150px;
+    padding: 10px 10px 10px 10px;
+}
+
+
+/********SCREENSHOTS**********/
+
+
+#contentForScreenshots{
+    margin: 0px 0px 0px 0px;
+    padding: 15px 0px 15px 0px;
+    text-align: center;
+}
+
+#screenshotPanel {
+    background-color: #886A4E;
+    border: 2px solid #D98638;
+    margin: 0px 0px 0px 15px;
+    padding: 5px 5px 50px 5px;
+    text-align: center;
+    width: 763px;
+}
+
+#screenshotPanel img {
+    border: 2px solid #D98638;
+}
+
+#descText {
+    font-size: 80%;
+}
+
+
+/*******************  MODERATOR CONTROLS *******************/
+
+#moderatorControls { 
+    background-color: white;
+    border: 2px solid #ff0000;
+    left: -50px;
+    padding: 10px 10px 40px 10px;
+    position: absolute;
+    top:  950px;
+}
+
+#moderatorControls a{ 
+    color: #ff0000;
+    margin-left: 10px;
+}
+
+#moderatorControls p{ 
+    color: #ff0000;
+}
