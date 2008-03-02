@@ -16,4 +16,4 @@ javascript/Javascript__.g
 javascript/src/emacs/flyparse/javascript/JavascriptLexer.java
 javascript/src/emacs/flyparse/javascript/JavascriptParser.java
 
-lib
+lib/*
