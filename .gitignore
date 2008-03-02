@@ -6,7 +6,7 @@ as3/AS3__.g
 as3/src/emacs/flyparse/as3/AS3Lexer.java
 as3/src/emacs/flyparse/as3/AS3Parser.java
 
-bin
+bin/*
 
 css/CSS__.g
 css/src/emacs/flyparse/css/CSSLexer.java
