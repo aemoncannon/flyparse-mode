@@ -361,7 +361,7 @@
 			  (error (progn
 				   (message "Failed to parse %s" file-path)
 				   nil)
-			  ))))
+				 ))))
 	     (if tree
 		 (progn
 		   (flyparse-cache-tree tree file-path)
@@ -369,6 +369,41 @@
 		   (incf counter)))))))
     (message "Finished caching %s files." counter)))
 
+
+(defun flyparse-write-cached-trees (dir-path)
+  (interactive (list (ido-read-directory-name "Directory to write cache: ")))
+  (let* ((temp-file-name (concat (or dir-path (file-name-directory buffer-file-name))
+				 ".flypase-tree-cache.el")))
+    (with-temp-buffer
+      (flyparse-for-each-cached-tree 
+       (lambda (path tree)
+	 (insert (format "(puthash %S '%S flyparse-loading-tree-cache)\n" path tree))
+	 ))
+      (let ((buffer-file-coding-system 'unix))
+	(write-region (point-min) (point-max) temp-file-name nil 566))
+      )
+    (message "Finished writing %s" temp-file-name)
+    ))
+
+(defun flyparse-read-cached-trees (dir-path)
+  (interactive (list (ido-read-directory-name "Directory to read cache from: ")))
+  (let* ((temp-file-name (concat (or dir-path (file-name-directory buffer-file-name))
+				 ".flypase-tree-cache.el")))
+    (if (not (file-exists-p temp-file-name))
+	(message "Error loading cached trees: %s not found." temp-file-name)
+      (let ((counter 0)
+	    (flyparse-loading-tree-cache (make-hash-table :test 'equal)))
+	(load temp-file-name nil t)
+	(maphash (lambda (path tree)
+		   (if (not (gethash path flyparse-tree-cache '()))
+		       (progn
+			 (puthash path tree flyparse-tree-cache)
+			 (incf counter)
+			 )))
+		 flyparse-loading-tree-cache)
+	(message "Loaded %s trees from %s" counter temp-file-name)
+	))
+    ))
 
 (defun flyparse-clear-debug-overlays ()
   "Clear all debug overlays from this buffer."
