@@ -20,6 +20,7 @@ import java.io.PrintWriter
 
 val settings = new Settings
 settings.stop.value = List("namer")
+settings.Xprintpos.value = true
 val sourceFiles = List(new File("Draggable.scala"))
 val reporter = new ConsoleReporter(settings)
 val compiler = new Global(settings, reporter)
@@ -395,7 +396,7 @@ class TreePrinter(out: PrintWriter) {
   }
 
   def print(tree: Tree) {
-    if (settings.Xprintpos.value) print("[" + tree.pos + "]")
+    if (settings.Xprintpos.value) print("(" + tree.pos.offset.getOrElse{-1} + ")")
     printRaw(
       if (tree.isDef && tree.symbol != NoSymbol && tree.symbol.isInitialized) {
         tree match {
