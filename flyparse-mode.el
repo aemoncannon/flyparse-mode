@@ -1462,6 +1462,18 @@
 		  (file-name-nondirectory dir)))))
 
 
+(defun flyparse-re-search-containing-point (regex limit-start limit-end group-number-containing-point pos)
+  "A helper for finding regex matches for which the current point is contained in a specified group."
+  (save-excursion
+    (goto-char limit-start)
+    (catch 'return-now
+      (while (< (point) limit-end)
+	(if (and (re-search-forward regex limit-end 1)
+		 (<= (match-beginning group-number-containing-point) pos)
+		 (>= (match-end group-number-containing-point) pos))
+	    (throw 'return-now t))
+	))))
+
 
 (provide 'flyparse-mode)
 
