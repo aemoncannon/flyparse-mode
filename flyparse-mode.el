@@ -926,7 +926,6 @@
 
     ('text-match
      (let ((regex (first args)))
-       (message "%s" (flyparse-tree-as-text tree))
        (not (null (string-match regex (flyparse-tree-as-text tree))))))
 
     ))
