@@ -6,7 +6,7 @@
 (add-hook 'javascript-mode-hook
           (lambda ()
 	    (setq flyparse-parse-cmd javascript-flyparse-parse-cmd)
-	    (flyparse-mode)
+	    ;;(flyparse-mode)
 	    ))
 
 (provide 'javascript-flyparse-extensions)
