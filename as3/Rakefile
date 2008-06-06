@@ -40,7 +40,9 @@ end
 task :test => [] do
   run_tests('./test',
             lambda{|path| (path =~ /\.as$/ and not path =~ /\.svn/) },
-            lambda{|path| "java emacs.flyparse.as3.AS3Driver #{path}" })
+            lambda{|path| "java emacs.flyparse.as3.AS3Driver #{path}" },
+            lambda{|line| line =~ /mismatched input .*? expecting SEMI$/} # <--- ignore these, they're not important.
+            )
 end
 
 task :profile => [] do
