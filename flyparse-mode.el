@@ -373,7 +373,7 @@
 (defun flyparse-write-cached-trees (dir-path)
   (interactive (list (ido-read-directory-name "Directory to write cache: ")))
   (let* ((temp-file-name (concat (or dir-path (file-name-directory buffer-file-name))
-				 ".flypase-tree-cache.el")))
+				 ".flyparse-tree-cache.el")))
     (with-temp-buffer
       (flyparse-for-each-cached-tree 
        (lambda (path tree)
@@ -388,7 +388,7 @@
 (defun flyparse-read-cached-trees (dir-path)
   (interactive (list (ido-read-directory-name "Directory to read cache from: ")))
   (let* ((temp-file-name (concat (or dir-path (file-name-directory buffer-file-name))
-				 ".flypase-tree-cache.el")))
+				 ".flyparse-tree-cache.el")))
     (if (not (file-exists-p temp-file-name))
 	(message "Error loading cached trees: %s not found." temp-file-name)
       (let ((counter 0)
