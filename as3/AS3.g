@@ -600,7 +600,7 @@ options {k=1;}
     ;
 
 namespaceName
-	:	IDENT | reservedNamespace
+	:	STAR | IDENT | reservedNamespace
 	;
 
 reservedNamespace
@@ -895,19 +895,20 @@ Note: $postfixExpression refers to the current tree for this
 rule. So, in the *, we are repeatedly re-parenting the tree */
 postfixExpression
 	:	(primaryExpression -> primaryExpression)
-		(	//qualified names
+		(	// Property access
             propOrIdent
             -> ^(PROP_ACCESS $postfixExpression propOrIdent)
             
-		|	//E4X expression
+		|	// e4x expression
+            (DOT e4xExpression) =>  // disambiguate with above
             DOT e4xExpression
             -> ^(E4X_EXPRESSION $postfixExpression e4xExpression)
 
-		|	//Extended E4X expression
+		|	// Extended e4x expression
             E4X_DESC e4xExpression
             -> ^(E4X_EXPRESSION $postfixExpression E4X_DESC e4xExpression)
             
-		|	//array access
+		|	// Array access
             LBRACK expression RBRACK
             -> ^(ARRAY_ACCESS $postfixExpression ^(ARRAY_SUBSCRIPT LBRACK expression RBRACK))
 
@@ -919,13 +920,14 @@ postfixExpression
 		( 	INC -> ^(POST_INC $postfixExpression INC)
 	 	|	DEC -> ^(POST_DEC $postfixExpression DEC)
 		)?
-
+       
  	;
 
 e4xExpression
 	:	STAR
 	|	e4xAttributeIdentifier
 	|	e4xFilterPredicate
+    |   qualifiedIdent
 	;
 
 e4xAttributeIdentifier
@@ -937,9 +939,9 @@ e4xAttributeIdentifier
 	;
 
 e4xFilterPredicate
-	:	LPAREN!
+	:	LPAREN
 		expression
-		RPAREN!
+		RPAREN
 	;
 
 primaryExpression
@@ -1161,17 +1163,12 @@ DIV	            :	'/';
 
 
 XML_LITERAL
-	:	(XML_LITERAL) =>
-      '<' IDENT (XML_WS | XML_ATTRIBUTE)*
-		(	'>' (XML_SUBTREE | XML_TEXTNODE | XML_COMMENT | XML_CDATA | XML_BINDING)* 
-            '</' IDENT '>'
-		|	'/>'
-		)
+	:	(XML_LITERAL) => XML_SUBTREE
 	;
 
 
 fragment XML_SUBTREE
-	:	'<' IDENT (XML_WS | XML_ATTRIBUTE)*
+	:	'<' (IDENT | XML_BINDING) (XML_WS | XML_ATTRIBUTE)*
 		(	'>' (XML_SUBTREE | XML_TEXTNODE | XML_COMMENT | XML_CDATA | XML_BINDING)*
 			'</' IDENT '>'
 		|	'/>'
