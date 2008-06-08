@@ -354,6 +354,7 @@ package com.paneplayer.remote {
 								finalFriends.push(first);
 							}
 						}
+
 						callback(finalFriends);
 					}
 					else{
