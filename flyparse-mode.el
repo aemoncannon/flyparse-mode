@@ -371,6 +371,9 @@
 
 
 (defun flyparse-write-cached-trees (dir-path)
+  "Write flyparse-tree-cache to dir-path in a condensed eval-able format.
+   See flyparse-read-cached-trees for reloading.
+  "
   (interactive (list (ido-read-directory-name "Directory to write cache: ")))
   (let* ((temp-file-name (concat (or dir-path (file-name-directory buffer-file-name))
 				 ".flyparse-tree-cache.el")))
@@ -386,6 +389,7 @@
     ))
 
 (defun flyparse-read-cached-trees (dir-path)
+  "Read a flyparse-tree-cache from flat file. This operation will not overwrite existing trees."
   (interactive (list (ido-read-directory-name "Directory to read cache from: ")))
   (let* ((temp-file-name (concat (or dir-path (file-name-directory buffer-file-name))
 				 ".flyparse-tree-cache.el")))
@@ -404,6 +408,21 @@
 	(message "Loaded %s trees from %s" counter temp-file-name)
 	))
     ))
+
+
+(defmacro flyparse-with-temp-cached-trees (mappings &rest body)
+  "Exectute expressions in body in context of a temporary flyparse-tree-cache.
+   Useful for unit testing in controlled environments."
+  (let ((prepared-mappings `(list ,@(mapcar (lambda (ea) `(list ,(first ea) ,(second ea))) mappings))))
+    `(let ((flyparse-tree-cache (make-hash-table :test 'equal)))
+       (mapc (lambda (pair)
+	       (let ((path (first pair))
+		     (tree (second pair)))
+		 (flyparse-cache-tree tree path)))
+	     ,prepared-mappings)
+       ,@body
+       )))
+  
 
 (defun flyparse-clear-debug-overlays ()
   "Clear all debug overlays from this buffer."
