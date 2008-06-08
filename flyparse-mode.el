@@ -538,7 +538,7 @@
        (let* ((err-str (format "Failed to launch parser process '%s' with args %s: %s"
 			       cmd args (error-message-string err))))
 	 (flyparse-log 0 err-str)
-	 (flyparse-cleanup-temp-files)
+	 (flyparse-cleanup-temp-files buffer-file-name)
 	 )))))
 
 (defun flyparse-create-parse-process (cmd args)
@@ -673,7 +673,7 @@
   (when flyparse-timer
     (cancel-timer flyparse-timer)
     (setq flyparse-timer nil)
-    (flyparse-cleanup-temp-files)
+    (flyparse-cleanup-temp-files buffer-file-name)
     ))
 
 (defun flyparse-after-change-function (start stop len)
