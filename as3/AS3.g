@@ -89,6 +89,10 @@ tokens {
                 return t;
             }
 
+            /* 
+               Used for resolving ambiguity between operators and constants, 
+               such as division '/' versus the regular expression syntax /hello/ 
+            */
             private boolean constantIsOk() {
                 int type = lastToken.getType();
                 return type == ASSIGN || type == LPAREN || type == LBRACK || 
