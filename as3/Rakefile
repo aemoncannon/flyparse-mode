@@ -20,38 +20,58 @@
 require 'fileutils'
 require '../test_helper.rb'
 
-task :parser => [] do
-  system "java org.antlr.Tool AS3.g"
-  system "mv AS3Lexer.java src/emacs/flyparse/as3"
-  system "mv AS3Parser.java src/emacs/flyparse/as3"
+
+ANTLR_OPTIONS = [] # -trace
+JAVAC_OPTIONS = [] # -g (for debugging)
+
+PARSER_TARGETS = ["src/emacs/flyparse/as3/AS3Lexer.java", "src/emacs/flyparse/as3/AS3Parser.java"]
+PARSER_TARGETS.each do |ea|
+  file ea => "AS3.g" do
+    sh "java org.antlr.Tool #{ANTLR_OPTIONS.join(" ")} AS3.g"
+    mv ["AS3Lexer.java", "AS3Parser.java"], "src/emacs/flyparse/as3", :force => true
+  end
 end
 
-task :trace_parser => [] do
-  system "java org.antlr.Tool -trace AS3.g"
-  system "mv AS3Lexer.java src/emacs/flyparse/as3"
-  system "mv AS3Parser.java src/emacs/flyparse/as3"
+
+COMPILE_TARGET = "../bin/.compiled"
+DRIVER_SOURCE = ["src/emacs/flyparse/as3/FileWalker.java", "src/emacs/flyparse/as3/AS3Driver.java"]
+FLYPARSE_CORE_SOURCE = FileList["../src/**/*.java"]
+file COMPILE_TARGET => PARSER_TARGETS + DRIVER_SOURCE + FLYPARSE_CORE_SOURCE do
+  sh "javac #{JAVAC_OPTIONS.join(" ")} #{(PARSER_TARGETS + DRIVER_SOURCE).join(" ")} -d ../bin"
+  touch COMPILE_TARGET
 end
 
-task :compile => [] do
-  system "javac src/emacs/flyparse/as3/AS3Parser.java src/emacs/flyparse/as3/AS3Lexer.java -d ../bin"
-  system "javac src/emacs/flyparse/as3/AS3Driver.java -d ../bin"
-end
 
 task :test => [] do
   run_tests('./test',
             lambda{|path| (path =~ /\.as$/ and not path =~ /\.svn/) },
-            lambda{|path| "java emacs.flyparse.as3.AS3Driver #{path}" },
+            lambda{|path| "java emacs.flyparse.as3.AS3Driver -f #{path}" },
             lambda{|line| line =~ /mismatched input .*? expecting SEMI$/} # <--- ignore these, they're not important.
             )
 end
 
+
 task :profile => [] do
-  system "java -javaagent:c:/java_profile/profile/profile.jar emacs.flyparse.as3.AS3Driver ./test/input.as"
+  sh "java -javaagent:c:/java_profile/profile/profile.jar emacs.flyparse.as3.AS3Driver ./test/input.as"
 end
 
-task :trace => [:trace_parser, :compile]
 
-task :default => [:parser, :compile]
+task :debug => [] do
+  puts "\n\nExample jdb usage:"
+  puts "------------------------"
+  puts "stop in emacs.flyparse.as3.AS3Driver.main"
+  puts "run emacs.flyparse.as3.AS3Driver.main -l test\n\n"
+  sh "jdb -sourcepath src"
+end
+
+task :default => COMPILE_TARGET
+
+task :parser => PARSER_TARGETS
+
+task :clean => [] do
+  rm COMPILE_TARGET
+  rm PARSER_TARGETS
+end
 
 
 

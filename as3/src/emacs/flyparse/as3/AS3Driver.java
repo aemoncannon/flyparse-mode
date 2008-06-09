@@ -21,9 +21,13 @@ import emacs.flyparse.*;
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
 import java.io.*;
+import java.util.Collection;
+import java.util.Vector;
+import java.util.regex.*;
 
 public class AS3Driver{
     
+    /* A helper for debugging. */	 
     public static void printAllTokens(Lexer lex){
 	CommonToken t  = (CommonToken)lex.nextToken();
 	while(t.getType() != Token.EOF){
@@ -33,30 +37,67 @@ public class AS3Driver{
 	lex.reset();
     }
 
+
     public static void main(String[] args) throws Exception {
-	SanitizedFileStream chars = new SanitizedFileStream(args[0]);
-        AS3Lexer lex = new AS3Lexer(chars);
-       	CommonTokenStream tokens = new CommonTokenStream(lex);
-        AS3Parser parser = new AS3Parser(tokens);
-	parser.setTreeAdaptor(new FlyparseTreeAdaptor());
-	AS3Parser.compilationUnit_return ret = parser.compilationUnit();
 	BufferedWriter bout;
-	if(args.length > 1){
+	if(args[0].equals("-f")){ 
+	    if(args.length == 3){// -f input output
+		bout = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[2])), 512);
+	    }
+	    else{ // -f input 
+		bout = new BufferedWriter(new OutputStreamWriter(System.out), 512);
+	    }
+	    processSingleFile(new File(args[1]), bout);
+	}
+	else if(args[0].equals("-l") && args.length >= 3) { // -l output [dir dir dir....]
 	    bout = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1])), 512);
+	    Vector<File> files = new Vector<File>();
+	    for(int i = 2; i < args.length; i++){
+		files.addAll(FileWalker.listFiles(new File(args[i]), Pattern.compile("\\.as$"), true));
+	    }
+	    processAll(files, bout);
 	}
-	else{
-	    bout = new BufferedWriter(new OutputStreamWriter(System.out), 512);
-	}
-	FlyparseTree tree = (FlyparseTree)ret.getTree();
-	tree.prepareTree();
+    }
+
+
+    private static void processSingleFile(File file, BufferedWriter bout) throws Exception{
 	try{
 	    bout.write("(setq tree '");
-	    tree.writeTo(bout);
+	    writeTreeForFile(file, bout);
 	    bout.write(")");
 	}
 	catch(IOException e){
 	}
 	bout.flush();
+    }
+
+
+    private static void processAll(Vector<File> files, BufferedWriter bout) throws Exception{
+	try{
+	    for(File file : files){
+		bout.write("(puthash \"");
+		bout.write(file.getCanonicalPath());
+		bout.write("\" '");
+		writeTreeForFile(file, bout);
+		bout.write(" flyparse-loading-tree-cache)\n");
+	    }
+	}
+	catch(IOException e){
+	}
+	bout.flush();
+    }
+
+
+    private static void writeTreeForFile(File file, BufferedWriter bout)  throws Exception {
+	SanitizedFileStream chars = new SanitizedFileStream(file.getPath());
+	AS3Lexer lex = new AS3Lexer(chars);
+	CommonTokenStream tokens = new CommonTokenStream(lex);
+	AS3Parser parser = new AS3Parser(tokens);
+	parser.setTreeAdaptor(new FlyparseTreeAdaptor());
+	AS3Parser.compilationUnit_return ret = parser.compilationUnit();
+	FlyparseTree tree = (FlyparseTree)ret.getTree();
+	tree.prepareTree();	
+	tree.writeTo(bout);
     }
     
 }
