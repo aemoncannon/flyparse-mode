@@ -67,6 +67,9 @@
 (defvar flyparse-tree-cache (make-hash-table :test 'equal)
   "A hash table mapping file-system paths to parse trees.")
 
+(defvar flyparse-cache-file-name ".flyparse-tree-cache.el"
+  "Default filename for the file-system tree-cache representation.")
+
 (defvar flyparse-debug-overlays '()
   "Time to wait after last change before starting compilation.")
 (make-variable-buffer-local 'flyparse-debug-overlays)
@@ -376,7 +379,7 @@
   "
   (interactive (list (ido-read-directory-name "Directory to write cache: ")))
   (let* ((temp-file-name (concat (or dir-path (file-name-directory buffer-file-name))
-				 ".flyparse-tree-cache.el")))
+				 flyparse-cache-file-name)))
     (with-temp-buffer
       (flyparse-for-each-cached-tree 
        (lambda (path tree)
@@ -392,7 +395,7 @@
   "Read a flyparse-tree-cache from flat file. This operation will not overwrite existing trees."
   (interactive (list (ido-read-directory-name "Directory to read cache from: ")))
   (let* ((temp-file-name (concat (or dir-path (file-name-directory buffer-file-name))
-				 ".flyparse-tree-cache.el")))
+				 flyparse-cache-file-name)))
     (if (not (file-exists-p temp-file-name))
 	(message "Error loading cached trees: %s not found." temp-file-name)
       (let ((counter 0)

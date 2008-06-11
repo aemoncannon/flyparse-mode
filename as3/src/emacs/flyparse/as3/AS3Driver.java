@@ -55,6 +55,7 @@ public class AS3Driver{
 	    for(int i = 2; i < args.length; i++){
 		files.addAll(FileWalker.listFiles(new File(args[i]), Pattern.compile("\\.as$"), true));
 	    }
+	    System.out.println("Found " + files.size() + " files. Parsing..");
 	    processAll(files, bout);
 	}
     }
@@ -73,17 +74,19 @@ public class AS3Driver{
 
 
     private static void processAll(Vector<File> files, BufferedWriter bout) throws Exception{
-	try{
-	    for(File file : files){
-		bout.write("(puthash \"");
-		bout.write(file.getCanonicalPath());
-		bout.write("\" '");
-		writeTreeForFile(file, bout);
-		bout.write(" flyparse-loading-tree-cache)\n");
-	    }
+	Pattern p = Pattern.compile("\\\\");
+	int count = 0;
+	for(File file : files){
+	    Matcher matcher = p.matcher(file.getCanonicalPath());
+	    String path = matcher.replaceAll("/");
+	    bout.write("(puthash \"");
+	    bout.write(path);
+	    bout.write("\" '");
+	    writeTreeForFile(file, bout);
+	    bout.write(" flyparse-loading-tree-cache)\n");
+	    count++;
 	}
-	catch(IOException e){
-	}
+	System.out.println("Parsed " + count + " files.");
 	bout.flush();
     }
 
@@ -94,10 +97,15 @@ public class AS3Driver{
 	CommonTokenStream tokens = new CommonTokenStream(lex);
 	AS3Parser parser = new AS3Parser(tokens);
 	parser.setTreeAdaptor(new FlyparseTreeAdaptor());
-	AS3Parser.compilationUnit_return ret = parser.compilationUnit();
-	FlyparseTree tree = (FlyparseTree)ret.getTree();
-	tree.prepareTree();	
-	tree.writeTo(bout);
+	try{
+	    AS3Parser.compilationUnit_return ret = parser.compilationUnit();
+	    FlyparseTree tree = (FlyparseTree)ret.getTree();
+	    tree.prepareTree();	
+	    tree.writeTo(bout);
+	}
+	catch(Exception e){
+	    bout.write("()");
+	}
     }
     
 }
