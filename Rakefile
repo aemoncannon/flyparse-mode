@@ -21,30 +21,31 @@ require 'fileutils'
 require 'date'
 
 ARCHIVE_NAME = "flyparse_#{Date.today}.zip"
+RAKE = PLATFORM =~ /linux/ ? "rake" : "rake.bat"
 
 task :clean => [] do
   FileUtils.rm_rf Dir.glob('bin/*')
 end
 
 task :compile_common => [] do
-  system "javac src/emacs/flyparse/FlyparseTreeAdaptor.java src/emacs/flyparse/FlyparseTree.java src/emacs/flyparse/SanitizedFileStream.java -d bin"
+  sh "javac src/emacs/flyparse/FlyparseTreeAdaptor.java src/emacs/flyparse/FlyparseErrorNode.java src/emacs/flyparse/FlyparseTree.java src/emacs/flyparse/SanitizedFileStream.java -d bin"
 end
 
 task :as3 => [] do
   Dir.chdir("as3"){
-    system "rake.bat"
+    sh "#{RAKE}"
   }
 end
 
 task :css => [] do
   Dir.chdir("css"){
-    system "rake.bat"
+    sh "#{RAKE}"
   }
 end
 
 task :javascript => [] do
   Dir.chdir("javascript"){
-    system "rake.bat"
+    sh "#{RAKE}"
   }
 end
 
@@ -53,7 +54,7 @@ end
 
 task :make_jar => [] do
   Dir.chdir("bin"){
-    system "jar cf ../lib/flyparse_parsers.jar emacs"
+    sh "jar cf ../lib/flyparse_parsers.jar emacs"
     if $?.success?; puts "Created jar successfully."; end
   }
 end
@@ -66,7 +67,7 @@ task :make_archive => [:make_jar] do
                    "css/css-flyparse-extensions.el",
                    "javascript/javascript-flyparse-extensions.el"]
 
-  system "7z a -r -tZip -x!*.svn #{ARCHIVE_NAME} #{archive_files.join(" ")}"
+  sh "7z a -r -tZip -x!*.svn #{ARCHIVE_NAME} #{archive_files.join(" ")}"
   if $?.success? and File.exist? ARCHIVE_NAME
     puts "Created deployment archive successfully."
   else
@@ -76,21 +77,24 @@ end
 
 task :test => [] do
   Dir.chdir("as3"){
-    system "rake.bat test"
+    sh "#{RAKE} test"
   }
   Dir.chdir("css"){
-    system "rake.bat test"
+    sh "#{RAKE} test"
   }
   Dir.chdir("javascript"){
-    system "rake.bat test"
+    sh "#{RAKE} test"
   }
 end
 
-task :deploy => [:clean, :compile_common, :all_languages, :make_archive] do
+task :deploy => [:build, :make_archive] do
+end
+
+task :build => [:clean, :compile_common, :all_languages] do
 end
 
 
-task :default => [:deploy]
+task :default => [:build]
 
 
 

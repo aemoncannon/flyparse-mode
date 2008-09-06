@@ -316,7 +316,7 @@ variableDefinition
 
 declaration
 	:	varOrConst variableDeclarator declarationTail
-        -> ^(DECLARATION varOrConst variableDeclarator declarationTail)
+        -> ^(DECLARATION varOrConst variableDeclarator declarationTail?)
 	;
 
 varOrConst
@@ -391,7 +391,7 @@ statement
 
 	|	ifStatement
 
-	|	forEachStatement
+	|	(FOR EACH) => forEachStatement
 
 	|	forStatement
 

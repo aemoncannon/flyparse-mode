@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 require 'find'
+require 'rubygems'
 require 'platform'
 require 'popen4'
 

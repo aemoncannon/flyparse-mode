@@ -60,6 +60,14 @@ public class FlyparseTreeAdaptor extends CommonTreeAdaptor {
     public Token createToken(Token fromToken) {
 	return new CommonToken(fromToken);
     }
+
+
+    public Object errorNode(TokenStream input, Token start, Token stop,
+			    RecognitionException e)
+    {
+	FlyparseErrorNode t = new FlyparseErrorNode(input, start, stop, e);
+	return t;
+    }
     
 
     

@@ -97,15 +97,15 @@ public class AS3Driver{
 	CommonTokenStream tokens = new CommonTokenStream(lex);
 	AS3Parser parser = new AS3Parser(tokens);
 	parser.setTreeAdaptor(new FlyparseTreeAdaptor());
-	try{
+// 	try{
 	    AS3Parser.compilationUnit_return ret = parser.compilationUnit();
 	    FlyparseTree tree = (FlyparseTree)ret.getTree();
 	    tree.prepareTree();	
 	    tree.writeTo(bout);
-	}
-	catch(Exception e){
-	    bout.write("()");
-	}
+// 	}
+// 	catch(Exception e){
+// 	    bout.write("()");
+// 	}
     }
     
 }
