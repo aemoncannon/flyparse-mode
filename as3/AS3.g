@@ -275,7 +275,7 @@ methodDefinition
                 methodName
 				parameterDeclarationList
 				typeExpression?
-				maybeBlock
+				maybeBlock?
         )
 	;
 
