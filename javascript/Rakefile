@@ -37,6 +37,9 @@ task :test => [] do
             lambda{|path| "java emacs.flyparse.javascript.JavascriptDriver #{path}" })
 end
 
+task :clean => [] do
+end
+
 task :default => [:compile]
 
 

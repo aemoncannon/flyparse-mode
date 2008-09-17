@@ -20,44 +20,38 @@
 require 'fileutils'
 require 'date'
 
+
+JAVA_CLASSPATH = ["bin", "lib/antlr-2.7.7.jar", "lib/antlr-3.1.jar", "lib/antlr-runtime-3.1.jar", "lib/stringtemplate-3.2.jar"]
+ENV["CLASSPATH"] = ENV["CLASSPATH"].to_s + ":" + JAVA_CLASSPATH.collect{|ea| File.expand_path(ea)}.join(":")
 ARCHIVE_NAME = "flyparse_#{Date.today}.zip"
 RAKE = PLATFORM =~ /linux/ ? "rake" : "rake.bat"
+LANGUAGES = ["as3", "css", "javascript"]
+JAR_TARGET = "flyparse-parsers.jar"
+JAVAC_OPTIONS = [] # -g (for debugging)
 
-task :clean => [] do
-  FileUtils.rm_rf Dir.glob('bin/*')
+
+COMMON_TARGET = "bin/.common"
+FLYPARSE_CORE_SOURCE = FileList["src/**/*.java"]
+file COMMON_TARGET => FLYPARSE_CORE_SOURCE do
+  sh "javac #{JAVAC_OPTIONS.join(" ")} #{FLYPARSE_CORE_SOURCE.join(" ")} -d bin"
+  touch COMMON_TARGET
 end
 
-task :compile_common => [] do
-  sh "javac src/emacs/flyparse/FlyparseTreeAdaptor.java src/emacs/flyparse/FlyparseErrorNode.java src/emacs/flyparse/FlyparseTree.java src/emacs/flyparse/SanitizedFileStream.java -d bin"
-end
 
-task :as3 => [] do
-  Dir.chdir("as3"){
-    sh "#{RAKE}"
+task :all_languages => [] do
+  LANGUAGES.each{|l|
+    Dir.chdir(l.to_s){
+      sh "#{RAKE}"
+    }
   }
 end
 
-task :css => [] do
-  Dir.chdir("css"){
-    sh "#{RAKE}"
-  }
-end
-
-task :javascript => [] do
-  Dir.chdir("javascript"){
-    sh "#{RAKE}"
-  }
-end
-
-task :all_languages => [:as3, :css, :javascript] do
-end
-
-task :make_jar => [] do
+file JAR_TARGET => [:build] do
   Dir.chdir("bin"){
-    sh "jar cf ../lib/flyparse_parsers.jar emacs"
-    if $?.success?; puts "Created jar successfully."; end
+    sh "jar cf ../lib/#{JAR_TARGET} emacs"
   }
 end
+
 
 task :make_archive => [:make_jar] do
   FileUtils.rm_f Dir.glob('./*.zip')
@@ -75,28 +69,36 @@ task :make_archive => [:make_jar] do
   end
 end
 
+
 task :test => [] do
-  Dir.chdir("as3"){
-    sh "#{RAKE} test"
-  }
-  Dir.chdir("css"){
-    sh "#{RAKE} test"
-  }
-  Dir.chdir("javascript"){
-    sh "#{RAKE} test"
+  LANGUAGES.each{|l|
+    Dir.chdir(l){
+      sh "#{RAKE} test"
+    }
   }
 end
+
 
 task :deploy => [:build, :make_archive] do
 end
 
-task :build => [:clean, :compile_common, :all_languages] do
+
+task :build => [:clean, COMMON_TARGET, :all_languages] do
 end
 
 
-task :default => [:build]
+task :default => [JAR_TARGET]
 
 
+task :clean => [] do
+  rm_f COMMON_TARGET
+  FileUtils.rm_rf Dir.glob('bin/*')
+  LANGUAGES.each{|l|
+    Dir.chdir(l){
+      sh "#{RAKE} clean"
+    }
+  }
+end
 
 
 

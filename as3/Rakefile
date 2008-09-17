@@ -33,12 +33,12 @@ PARSER_TARGETS.each do |ea|
 end
 
 
-COMPILE_TARGET = "../bin/.compiled"
+AS3_TARGET = "../bin/.as3"
 DRIVER_SOURCE = ["src/emacs/flyparse/as3/FileWalker.java", "src/emacs/flyparse/as3/AS3Driver.java"]
 FLYPARSE_CORE_SOURCE = FileList["../src/**/*.java"]
-file COMPILE_TARGET => PARSER_TARGETS + DRIVER_SOURCE + FLYPARSE_CORE_SOURCE do
+file AS3_TARGET => PARSER_TARGETS + DRIVER_SOURCE + FLYPARSE_CORE_SOURCE do
   sh "javac #{JAVAC_OPTIONS.join(" ")} #{(PARSER_TARGETS + DRIVER_SOURCE).join(" ")} -d ../bin"
-  touch COMPILE_TARGET
+  touch AS3_TARGET
 end
 
 
@@ -64,13 +64,13 @@ task :debug => [] do
   sh "jdb -sourcepath src"
 end
 
-task :default => COMPILE_TARGET
+task :default => AS3_TARGET
 
 task :parser => PARSER_TARGETS
 
 task :clean => [] do
-  rm COMPILE_TARGET
-  rm PARSER_TARGETS
+  rm_f AS3_TARGET
+  rm_f PARSER_TARGETS
 end
 
 

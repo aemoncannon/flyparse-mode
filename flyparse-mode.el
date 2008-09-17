@@ -34,8 +34,8 @@
 ;; * 'require' this file in your .emacs file e.g:
 ;;    (require 'flyparse-mode)
 
-;; * The 'lib' subdirectory of the flyparse distribution a jar that 
-;;   contains some parsers. Add this jar to your system's java classpath.
+;; * The 'lib' subdirectory of the flyparse distribution contains flyparse-parsers.jar and antlr-runtime-3.1.jar.
+;;   Add these jars to your system's java classpath.
 
 ;; * Some things to try:
 ;;   Load up a supported filetype (css or js or as) - 
