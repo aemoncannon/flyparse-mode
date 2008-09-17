@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 require 'fileutils'
-require '../test_helper.rb'
 
 task :parser => [] do
   system "java org.antlr.Tool CSS.g"
@@ -43,6 +42,7 @@ task :debug => [:parser_debug] do
 end
 
 task :test => [] do
+  require '../test_helper.rb'
   run_tests('./test',
             lambda{|path| (path =~ /\.css$/ and not path =~ /\.svn/) },
             lambda{|path| "java emacs.flyparse.css.CSSDriver #{path}" })

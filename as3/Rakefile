@@ -18,8 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 require 'fileutils'
-require '../test_helper.rb'
-
 
 ANTLR_OPTIONS = [] # -trace
 JAVAC_OPTIONS = [] # -g (for debugging)
@@ -27,6 +25,7 @@ JAVAC_OPTIONS = [] # -g (for debugging)
 PARSER_TARGETS = ["src/emacs/flyparse/as3/AS3Lexer.java", "src/emacs/flyparse/as3/AS3Parser.java"]
 PARSER_TARGETS.each do |ea|
   file ea => "AS3.g" do
+    puts ENV["CLASSPATH"]
     sh "java org.antlr.Tool #{ANTLR_OPTIONS.join(" ")} AS3.g"
     mv ["AS3Lexer.java", "AS3Parser.java"], "src/emacs/flyparse/as3", :force => true
   end
@@ -43,6 +42,7 @@ end
 
 
 task :test => [] do
+  require '../test_helper.rb'
   run_tests('./test',
             lambda{|path| (path =~ /\.as$/ and not path =~ /\.svn/) },
             lambda{|path| "java emacs.flyparse.as3.AS3Driver -f #{path}" },

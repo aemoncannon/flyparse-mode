@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 require 'fileutils'
-require '../test_helper.rb'
 
 task :parser => [] do
   system "java org.antlr.Tool Javascript.g"
@@ -32,6 +31,7 @@ task :compile => [:parser] do
 end
 
 task :test => [] do
+  require '../test_helper.rb'
   run_tests('./test',
             lambda{|path| (path =~ /\.js$/ and not path =~ /\.svn/) },
             lambda{|path| "java emacs.flyparse.javascript.JavascriptDriver #{path}" })

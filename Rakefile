@@ -20,9 +20,22 @@
 require 'fileutils'
 require 'date'
 
+# Just like File.expand_path, but for windows systems it
+# capitalizes the drive name and ensures backslashes are used
+def normalize_path(path, *dirs)
+  path = File.expand_path(path, *dirs)
+  if PLATFORM =~ /win/
+    path.gsub!('/', '\\').gsub!(/^[a-zA-Z]+:/) { |s| s.upcase }
+  else
+    path
+  end
+end
 
+JAVA_CLASSPATH_DELIM = PLATFORM =~ /win/ ? ";" : ":"
 JAVA_CLASSPATH = ["bin", "lib/antlr-2.7.7.jar", "lib/antlr-3.1.jar", "lib/antlr-runtime-3.1.jar", "lib/stringtemplate-3.2.jar"]
-ENV["CLASSPATH"] = ENV["CLASSPATH"].to_s + ":" + JAVA_CLASSPATH.collect{|ea| File.expand_path(ea)}.join(":")
+ENV["CLASSPATH"] = (ENV["CLASSPATH"].to_s + 
+                    JAVA_CLASSPATH_DELIM + 
+                    JAVA_CLASSPATH.collect{|ea| normalize_path(ea) }.join(JAVA_CLASSPATH_DELIM))
 ARCHIVE_NAME = "flyparse_#{Date.today}.zip"
 RAKE = PLATFORM =~ /linux/ ? "rake" : "rake.bat"
 LANGUAGES = ["as3", "css", "javascript"]
@@ -56,7 +69,7 @@ end
 task :make_archive => [:make_jar] do
   FileUtils.rm_f Dir.glob('./*.zip')
   archive_files = ["COPYING", "README", "flyparse-mode.el", 
-                   "lib/flyparse_parsers.jar", 
+                   "lib/flyparse-parsers.jar", 
                    "as3/as3-flyparse-extensions.el",
                    "css/css-flyparse-extensions.el",
                    "javascript/javascript-flyparse-extensions.el"]
