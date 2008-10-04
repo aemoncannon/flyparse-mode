@@ -1,1 +1,42 @@
+Flyparse-mode is an emacs minor-mode designed to support the creation of programming-language major-modes. Flyparse uses external parsers to generate s-expression ASTs for language files, as they are being edited. Language modes are then able to query these ASTs using a declarative search syntax.
+
+Features:
+
+* Pluggable architecture. It doesn't matter how you implement the parser, as long as it supports the flyparse protocol. 
+
+* Simple and unobtrusive. Can be used to compliment an existing language mode. 
+
+* Provides an intuitive query language for accessing the parse-trees. For example, to get a list of all javascript function names in a file, you might say: (flyparse-query-all '("PROGRAM" "FUNCTION_DECLARATION" "FUNCTION_NAME" "IDENT")). 
+
+* Supports cross-file queries; it's very simple to implement a 'jump to definition' helper (see the included AS3 helpers). 
+
+* Provides helper functions to pretty-print a buffer's syntax tree or to overlay a shaded depth representation over the buffer (see images below). 
+
+* Includes parsers for javascript, css and actionscript 3. 
+
+* Allows for the creation of robust, readable language helpers. 
+
+
+
+Flyparse-mode is Copyright (c) 2007 Aemon Cannon, aemoncannon -at- gmail -dot- com
+
+Inspired by Pavel Kobyakov's flymake-mode
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
+
 See comments in flyparse-mode.el for installation and usage instructions.
+

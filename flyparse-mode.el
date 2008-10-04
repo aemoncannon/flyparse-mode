@@ -38,7 +38,7 @@
 ;;   Add these jars to your system's java classpath.
 
 ;; * Some things to try:
-;;   Load up a supported filetype (css or js or as) - 
+;;   Load up a supported filetype (an actionscript 3 file for instance) - 
 
 ;;   Launch flyparse mode: M-x flyparse-mode
 
