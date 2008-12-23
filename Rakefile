@@ -24,20 +24,20 @@ require 'date'
 # capitalizes the drive name and ensures backslashes are used
 def normalize_path(path, *dirs)
   path = File.expand_path(path, *dirs)
-  if PLATFORM =~ /win/
+  if PLATFORM =~ /mswin/
     path.gsub!('/', '\\').gsub!(/^[a-zA-Z]+:/) { |s| s.upcase }
   else
     path
   end
 end
 
-JAVA_CLASSPATH_DELIM = PLATFORM =~ /win/ ? ";" : ":"
+JAVA_CLASSPATH_DELIM = PLATFORM =~ /mswin/ ? ";" : ":"
 JAVA_CLASSPATH = ["bin", "lib/antlr-2.7.7.jar", "lib/antlr-3.1.jar", "lib/antlr-runtime-3.1.jar", "lib/stringtemplate-3.2.jar"]
 ENV["CLASSPATH"] = (ENV["CLASSPATH"].to_s + 
                     JAVA_CLASSPATH_DELIM + 
                     JAVA_CLASSPATH.collect{|ea| normalize_path(ea) }.join(JAVA_CLASSPATH_DELIM))
 ARCHIVE_NAME = "flyparse_#{Date.today}.zip"
-RAKE = PLATFORM =~ /linux/ ? "rake" : "rake.bat"
+RAKE = PLATFORM =~ /mswin/ ? "rake.bat" : "rake"
 LANGUAGES = ["as3", "css", "javascript"]
 JAR_TARGET = "flyparse-parsers.jar"
 JAVAC_OPTIONS = [] # -g (for debugging)
