@@ -91,16 +91,6 @@
   "Shell command called to parse this buffer.")
 (make-variable-buffer-local 'flyparse-parse-cmd)
 
-(defvar flyparse-java-lib-dir
-  (expand-file-name "~/emacs/flyparse-mode/lib/")
-  "Directory with necessary java jar files.")
-(make-variable-buffer-local 'flyparse-java-lib-dir)
-
-(defvar flyparse-java-jars
-  `("flyparse-parsers.jar" "antlr-runtime-3.1.jar")
-  "Jars used by flyparse.")
-(make-variable-buffer-local 'flyparse-java-jars)
-
 (defvar flyparse-file-type-commands
   `(("\.as$" . ("java" "emacs.flyparse.as3.AS3Driver"))
     ("\.css$" . ("java" "emacs.flyparse.css.CSSDriver"))
@@ -549,7 +539,7 @@
   (let* ((parser-cmd (or flyparse-parse-cmd 
 			 (flyparse-cmd-for-file-type buffer-file-name)))
 	 (cmd (first parser-cmd))
-	 (args (append (flyparse-java-lib-cmd-line) (rest parser-cmd))))
+	 (args (rest parser-cmd)))
     (flyparse-create-temp-buffer-copy)
     (condition-case err
 	(let ((proc (flyparse-create-parse-process 
@@ -575,21 +565,7 @@
 
 (defun flyparse-create-parse-process (cmd args)
   "Start parse process. Return the emacs process object."
-  (flyparse-log 3 "parse process cmd: %s with args: %s." cmd args)
   (apply 'start-process "*flyparse-proc*" (current-buffer) cmd args))
-
-(defun flyparse-java-separator ()
-  "Return the string used as a java jar separator."
-  (if (memq system-type '(ms-dos windows-nt cygwin))
-    ";"
-    ":"))
-
-(defun flyparse-java-lib-cmd-line ()
-  "Generate command line args for java process."
-  (list "-classpath"
-        (mapconcat (lambda (x) (concat flyparse-java-lib-dir x))
-                   flyparse-java-jars
-                   (flyparse-java-separator)))) 
 
 (defun flyparse-process-filter (process output)
   "STDOUT of parser is already redirected to a file,
