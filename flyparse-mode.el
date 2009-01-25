@@ -54,7 +54,7 @@
 (defvar flyparse-log-buffer-name "*flyparse-log*"
   "Name of buffer to which log messages will be printed.")
 
-(defvar flyparse-log-level 1
+(defvar flyparse-log-level 3
   "Logging level, only messages with level lower or equal will be logged.
   -1 = NONE, 0 = ERROR, 1 = WARNING, 2 = INFO, 3 = DEBUG")
 
@@ -69,6 +69,20 @@
 
 (defvar flyparse-cache-file-name ".flyparse-tree-cache.el"
   "Default filename for the file-system tree-cache representation.")
+
+
+(defvar flyparse-single-file-to-stdout-cmd-maker 'flyparse-make-single-file-to-stdout-cmd
+  "A function for creating parse commands")
+(make-variable-buffer-local 'flyparse-single-file-to-stdout-cmd-maker)
+
+(defvar flyparse-single-file-cmd-maker 'flyparse-make-single-file-cmd
+  "A function for creating parse commands")
+(make-variable-buffer-local 'flyparse-single-file-cmd-maker)
+
+(defvar flyparse-recursive-cmd-maker 'flyparse-make-recursive-cmd
+  "A function for creating parse commands.")
+(make-variable-buffer-local 'flyparse-make-recursive-cmd)
+
 
 (defvar flyparse-debug-overlays '()
   "Time to wait after last change before starting compilation.")
@@ -87,16 +101,12 @@
   "If t, flyparse parser process is running for the current buffer.")
 (make-variable-buffer-local 'flyparse-is-running)
 
-(defvar flyparse-parse-cmd nil
-  "Shell command called to parse this buffer.")
-(make-variable-buffer-local 'flyparse-parse-cmd)
-
 (defvar flyparse-file-type-commands
-  `(("\.as$" . ("java" "emacs.flyparse.as3.AS3Driver"))
+  `(("\.as$" . ("java" "emacs.flyparse.as3.AS3Driver" "-f"))
     ("\.css$" . ("java" "emacs.flyparse.css.CSSDriver"))
     ("\.js$" . ("java" "emacs.flyparse.javascript.JavascriptDriver"))
     )
-  "These are defaults. The value of flyparse-parse-cmd is preferred.")
+  "These are dumb defaults.")
 
 (defvar flyparse-buffer-is-dirty nil
   "Has this buffer been modified since the last parse?")
@@ -136,6 +146,19 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Public interface ;;
 ;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defun flyparse-make-single-file-to-stdout-cmd (file-name)
+  "Return command list of form '(cmd arg1 arg2 arg3)"
+  (flyparse-cmd-for-file-type file-name))
+
+(defun flyparse-make-single-file-cmd (file-name result-file-name)
+  "Return command list of form '(cmd arg1 arg2 arg3)"
+  (append (flyparse-cmd-for-file-type file-name) '("-f")))
+
+(defun flyparse-make-recursive-cmd (directory-name result-file-name)
+  "Return command list of form '(cmd arg1 arg2 arg3)"
+  (error "No default recursive parse command"))
 
 
 (defun flyparse-has-subtree-of-type-p (tree type)
@@ -350,7 +373,7 @@
 		     (null file-pattern))
 		 (funcall func path tree))) flyparse-tree-cache))
 
-(defun flyparse-cache-all (dir file-pattern cmd-list)
+(defun flyparse-cache-all (dir file-pattern cmd-maker)
   "Recursively iterate through files in 'dir' and cache the parse-tree 
    for each file whose full name matches the 'file-pattern' regex."
   (let ((counter 0))
@@ -360,7 +383,7 @@
        (if (string-match file-pattern (concat ea-dir ea-file))
 	   (let* ((file-path (expand-file-name (concat ea-dir ea-file)))
 		  (tree (condition-case err
-			    (flyparse-block-and-load-tree-from-file file-path cmd-list)
+			    (flyparse-block-and-load-tree-from-file file-path cmd-maker)
 			  (error (progn
 				   (message "Failed to parse %s" file-path)
 				   nil)
@@ -536,18 +559,17 @@
 (defun flyparse-start-parse ()
   "Start a flyparse parse on current buffer."
   (interactive)
-  (let* ((parser-cmd (or flyparse-parse-cmd 
-			 (flyparse-cmd-for-file-type buffer-file-name)))
+  (let* ((parser-cmd (funcall flyparse-single-file-cmd-maker
+			      (flyparse-temp-buffer-copy-file-name buffer-file-name)
+			      (flyparse-temp-parser-output-name buffer-file-name)))
 	 (cmd (first parser-cmd))
 	 (args (rest parser-cmd)))
     (flyparse-create-temp-buffer-copy)
     (condition-case err
-	(let ((proc (flyparse-create-parse-process 
-		     cmd 
-		     (append args (list (flyparse-temp-buffer-copy-file-name buffer-file-name) 
-					(flyparse-temp-parser-output-name buffer-file-name))))))
+	(let ((proc (flyparse-create-parse-process cmd args)))
 	  (flyparse-log 2 "Created process %d, command=%s, dir=%s" 
-			(process-id proc) (process-command proc)
+			(process-id proc) 
+			(process-command proc)
 			default-directory)
 	  (set-process-sentinel proc 'flyparse-process-sentinel)
 	  (set-process-filter proc 'flyparse-process-filter)
@@ -563,9 +585,9 @@
 	 (flyparse-cleanup-temp-files buffer-file-name)
 	 )))))
 
-(defun flyparse-create-parse-process (cmd args)
+(defun flyparse-create-parse-process (program-name args)
   "Start parse process. Return the emacs process object."
-  (apply 'start-process "*flyparse-proc*" (current-buffer) cmd args))
+  (apply 'start-process "*flyparse-proc*" (current-buffer) program-name args))
 
 (defun flyparse-process-filter (process output)
   "STDOUT of parser is already redirected to a file,
@@ -1409,17 +1431,16 @@
 ;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun flyparse-tree-for-string (cmd-list str)
-  "A testing helper that makes a blocking call to 'cmd-list'
-   and immediately returns the resultant parse-tree (with extraneous symbols
+(defun flyparse-tree-for-string (cmd-maker str)
+  "A testing helper that makes a blocking call and immediately returns the resultant parse-tree (with extraneous symbols
    stripped)."
-  ;; e.g. (flyparse-tree-for-string (flyparse-cmd-for-file-type "aemon.as") "package aemon{class Dude{}}")
+  ;; e.g. (flyparse-tree-for-string "package aemon{class Dude{}}")
   (let* ((temp-file-name ".temp-file-for-testing-flyparse"))
     (with-temp-buffer
       (insert str)
       (let ((buffer-file-coding-system 'unix))
 	(write-region (point-min) (point-max) temp-file-name nil 566))
-      (let ((tree (flyparse-block-and-load-tree-from-file temp-file-name cmd-list)))
+      (let ((tree (flyparse-block-and-load-tree-from-file temp-file-name cmd-maker)))
 	(when (file-exists-p temp-file-name)
 	  (delete-file temp-file-name))
 	tree))))
@@ -1428,10 +1449,11 @@
 ;; general helpers ;;
 ;;;;;;;;;;;;;;;;;;;;;
 
-(defun flyparse-block-and-load-tree-from-file (file-path cmd-list)
+(defun flyparse-block-and-load-tree-from-file (file-path cmd-maker)
   "Parse and return the tree for the source file at 'file-path'. This is 
    a blocking call. Return nil on error of any kind."
-  (let ((cmd (mapconcat 'identity (append cmd-list (list file-path)) " ")))
+  (let* ((cmd-list (funcall cmd-maker file-path))
+	 (cmd (mapconcat 'identity (append cmd-list) " ")))
     (let* ((result-string (with-output-to-string
 			    (with-current-buffer
 				standard-output
@@ -1445,28 +1467,6 @@
 	    (eval result-form)
 	    tree)))))
 
-(defun flyparse-async-load-tree-from-file (file-path cmd-list callback)
-  "Parse the source file at 'file-path' asynchronously, generate a parse-tree 
-   and then invoke 'callback' with tree as argument."
-  (lexical-let ((proc (apply 'start-process "*flyparse-proc*" nil
-			     (first cmd-list)
-			     (append (rest cmd-list) (list file-path))))
-		(callback callback))
-    (process-put proc 'parser-output "")
-    (set-process-sentinel
-     proc (lambda (process event) 
-	    (let* ((result-string (process-get process 'parser-output))
-		   (result-form (read result-string))
-		   (tree '()))
-	      (if (listp result-form)
-		  (progn
-		    (eval result-form)
-		    (funcall callback tree))))))
-    (set-process-filter
-     proc (lambda (process output)
-	    (let ((source-buffer (process-buffer process))
-		  (parser-output-so-far (process-get process 'parser-output)))
-	      (process-put process 'parser-output (concat parser-output-so-far output)))))))
 
 (defun flyparse-walk-path (dir action)
   "Walk 'dir' recursively, executing 'action' with (dir file) for each file."
