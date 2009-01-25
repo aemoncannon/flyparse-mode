@@ -51,6 +51,26 @@
 
 (eval-when-compile (require 'cl))
 
+
+;; IMPORTANT:
+
+;; Set these from your language mode so that flyparse will launch the correct shell commands.
+
+(defvar flyparse-single-file-to-stdout-cmd-maker 'flyparse-make-single-file-to-stdout-cmd
+  "A function for creating parse commands, see referenced function for more details.")
+(make-variable-buffer-local 'flyparse-single-file-to-stdout-cmd-maker)
+
+(defvar flyparse-single-file-cmd-maker 'flyparse-make-single-file-cmd
+  "A function for creating parse commands, see referenced function for more details.")
+(make-variable-buffer-local 'flyparse-single-file-cmd-maker)
+
+(defvar flyparse-recursive-cmd-maker 'flyparse-make-recursive-cmd
+  "A function for creating parse commands, see referenced function for more details.")
+(make-variable-buffer-local 'flyparse-make-recursive-cmd)
+
+
+
+
 (defvar flyparse-log-buffer-name "*flyparse-log*"
   "Name of buffer to which log messages will be printed.")
 
@@ -69,20 +89,6 @@
 
 (defvar flyparse-cache-file-name ".flyparse-tree-cache.el"
   "Default filename for the file-system tree-cache representation.")
-
-
-(defvar flyparse-single-file-to-stdout-cmd-maker 'flyparse-make-single-file-to-stdout-cmd
-  "A function for creating parse commands")
-(make-variable-buffer-local 'flyparse-single-file-to-stdout-cmd-maker)
-
-(defvar flyparse-single-file-cmd-maker 'flyparse-make-single-file-cmd
-  "A function for creating parse commands")
-(make-variable-buffer-local 'flyparse-single-file-cmd-maker)
-
-(defvar flyparse-recursive-cmd-maker 'flyparse-make-recursive-cmd
-  "A function for creating parse commands.")
-(make-variable-buffer-local 'flyparse-make-recursive-cmd)
-
 
 (defvar flyparse-debug-overlays '()
   "Time to wait after last change before starting compilation.")
@@ -149,15 +155,21 @@
 
 
 (defun flyparse-make-single-file-to-stdout-cmd (file-name)
-  "Return command list of form '(cmd arg1 arg2 arg3)"
+  "Given the full file name of the source file we'd like to parse,
+   return the required command, e.g. '(cmd arg1 arg2 arg3).
+   This command should pipe the AST sexp to stdout."
   (flyparse-cmd-for-file-type file-name))
 
 (defun flyparse-make-single-file-cmd (file-name result-file-name)
-  "Return command list of form '(cmd arg1 arg2 arg3)"
+  "Given the full file name of the source file we'd like to parse,
+   and the file to which the AST sexp should be written,
+   return the required command, e.g. '(cmd arg1 arg2 arg3)."
   (append (flyparse-cmd-for-file-type file-name) '("-f")))
 
 (defun flyparse-make-recursive-cmd (directory-names result-file-name)
-  "Return command list of form '(cmd arg1 arg2 arg3)"
+  "Given a list of directories, and an output file, 
+   return the command, '(cmd arg1 arg2 arg3), for recursively
+   parsing all source files within all of the directories."
   (error "No default recursive parse command"))
 
 
