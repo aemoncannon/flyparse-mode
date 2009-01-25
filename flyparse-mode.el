@@ -168,8 +168,9 @@
 
 (defun flyparse-make-recursive-cmd (directory-names result-file-name)
   "Given a list of directories, and an output file, 
-   return the command, '(cmd arg1 arg2 arg3), for recursively
-   parsing all source files within all of the directories."
+   return the command, '(cmd arg1 arg2 arg3).
+   This command should recursively parse all source 
+   files within all of the directories."
   (error "No default recursive parse command"))
 
 
