@@ -164,7 +164,7 @@
   "Given the full file name of the source file we'd like to parse,
    and the file to which the AST sexp should be written,
    return the required command, e.g. '(cmd arg1 arg2 arg3)."
-  (append (flyparse-cmd-for-file-type file-name) '("-f")))
+  (append (flyparse-cmd-for-file-type file-name) (list result-file-name)))
 
 (defun flyparse-make-recursive-cmd (directory-names result-file-name)
   "Given a list of directories, and an output file, 
