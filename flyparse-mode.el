@@ -156,9 +156,21 @@
   "Return command list of form '(cmd arg1 arg2 arg3)"
   (append (flyparse-cmd-for-file-type file-name) '("-f")))
 
-(defun flyparse-make-recursive-cmd (directory-name result-file-name)
+(defun flyparse-make-recursive-cmd (directory-names result-file-name)
   "Return command list of form '(cmd arg1 arg2 arg3)"
   (error "No default recursive parse command"))
+
+
+(defun flyparse-cmd-for-file-type (file-name &optional cmd-list)
+  "Return a command list appropriate to the file-type."
+  (let* ((cmd-list (or cmd-list flyparse-file-type-commands))
+	 (regex (first (first cmd-list)))
+	 (cmd (rest (first cmd-list))))
+    (or
+     (if (string-match regex file-name) 
+	 cmd)
+     (if (not (null (rest cmd-list))) 
+	 (flyparse-cmd-for-file-type file-name (rest cmd-list))))))
 
 
 (defun flyparse-has-subtree-of-type-p (tree type)
@@ -373,27 +385,67 @@
 		     (null file-pattern))
 		 (funcall func path tree))) flyparse-tree-cache))
 
-(defun flyparse-cache-all (dir file-pattern cmd-maker)
-  "Recursively iterate through files in 'dir' and cache the parse-tree 
-   for each file whose full name matches the 'file-pattern' regex."
-  (let ((counter 0))
-    (flyparse-walk-path
-     dir
-     (lambda (ea-dir ea-file)
-       (if (string-match file-pattern (concat ea-dir ea-file))
-	   (let* ((file-path (expand-file-name (concat ea-dir ea-file)))
-		  (tree (condition-case err
-			    (flyparse-block-and-load-tree-from-file file-path cmd-maker)
-			  (error (progn
-				   (message "Failed to parse %s" file-path)
-				   nil)
-				 ))))
-	     (if tree
-		 (progn
-		   (flyparse-cache-tree tree file-path)
-		   (message "Cached tree for %s" file-path)
-		   (incf counter)))))))
-    (message "Finished caching %s files." counter)))
+(defun flyparse-cache-all (dirs)
+  "Use the recursive parsing command to to parse all files, in any of dirs, and
+   cache their trees."
+  (let* ((output-file-name (make-temp-file "flyparse-cache-all_" nil ".as"))
+	 (parser-cmd (funcall flyparse-recursive-cmd-maker 
+			      dirs 
+			      output-file-name))
+	 (cmd (first parser-cmd))
+	 (args (rest parser-cmd)))
+    (condition-case err
+	(let ((proc (apply 'start-process "*flyparse-proc*" "*flyparse-cache-all-progress*" cmd args)))
+	  (flyparse-log 2 "Created cache-all process %d, command=%s, dir=%s" 
+			(process-id proc) 
+			(process-command proc)
+			default-directory)
+	  (process-put proc 'output-file-name output-file-name)
+	  (set-process-sentinel proc 'flyparse-cache-all-process-sentinel)
+	  (message "Parse started...")
+	  )
+      (error
+       (let* ((err-str (format "Failed to launch parser process '%s' with args %s: %s"
+			       cmd args (error-message-string err))))
+	 (flyparse-log 0 err-str)
+	 (delete-file output-file-name)
+	 )))))
+
+(defun flyparse-cache-all-process-sentinel (process event)
+  "Sentinel for flyparse buffers. Called automatically 
+   when external parser process finishes."
+  (when (memq (process-status process) '(signal exit))
+    (let* ((exit-status       (process-exit-status process))
+	   (command           (process-command process))
+	   (proc-buffer       (process-buffer process))
+	   (proc-id           (process-id process))
+	   (output-file-name  (process-get process 'output-file-name))
+	   (count  0))
+      (flyparse-log 3 "Flyparse process %d exited with code %d" proc-id exit-status)
+      (delete-process process)
+      (condition-case err
+	  (progn
+	    (if (eq exit-status 0)
+		(let ((flyparse-loading-tree-cache (make-hash-table :test 'equal)))
+		  ;; Load the parse tree...
+		  (load output-file-name nil t)
+		  (maphash (lambda (path tree)
+			     (if (and path tree)
+				 (progn
+				   (puthash path tree flyparse-tree-cache)
+				   (incf count))))
+			   flyparse-loading-tree-cache)
+		  (flyparse-log 2 "Finished caching %d trees." count)
+		  (message "Finished parsing %d files." count))
+	      (error "Non-Zero exit status."))
+	    (delete-file output-file-name)
+	    )
+	(error
+	 (let ((err-str (format "Flyparse cache-all failed: %s: %s" output-file-name (error-message-string err))))
+	   (flyparse-report-status "Failed" "")
+	   (flyparse-log 0 err-str)
+	   (delete-file output-file-name)
+	   ))))))
 
 
 (defun flyparse-write-cached-trees (dir-path)
@@ -498,7 +550,7 @@
 
 
 (defun flyparse-save-buffer-in-file (file-name)
-  "Save buffer to temp file. Use unix file coding:
+  "Save current buffer to file-name. Use unix file coding:
    (NO CARRIAGE RETURNS (they will screw up the 
    stream index information))"
   (save-restriction
@@ -509,28 +561,18 @@
   (flyparse-log 3 "Saved buffer %s in file %s." (buffer-name) file-name))
 
 
-(defun flyparse-temp-parser-output-name (source-file-name)
+(defun flyparse-make-temp-parser-output-file (source-file-name)
   "For the given filename, return the name of the file to which the external parser process should
    write the parser tree."
-  (let* ((postfix "flyparse_tree")
-	 (extension (file-name-extension source-file-name)))
-    (concat  (file-name-sans-extension source-file-name) "_" postfix "." extension)))
+  (let* ((extension (file-name-extension source-file-name)))
+    (make-temp-file "flyparse_parser_output" nil ".el")))
 
 
-(defun flyparse-temp-buffer-copy-file-name (source-file-name)
-  "Return the name of the file to which the given filename should be written for the 
+(defun flyparse-make-temp-buffer-copy-file (source-file-name)
+  "Return the name of the temporary file to which the given filename should be written for the 
    external parser-process to consume."
-  (let* ((postfix "flyparse")
-	 (extension (file-name-extension source-file-name)))
-    (concat  (file-name-sans-extension source-file-name) "_" postfix "." extension)))
-
-
-(defun flyparse-create-temp-buffer-copy ()
-  "Make a temporary copy of the current buffer, 
-   save its name in buffer data and return the name."
-  (let*  ((temp-buffer-copy-name  (flyparse-temp-buffer-copy-file-name buffer-file-name)))
-    (flyparse-save-buffer-in-file temp-buffer-copy-name)
-    (flyparse-log 3 "Create-temp-inplace: file=%s temp=%s." buffer-file-name temp-buffer-copy-name)))
+  (let* ((extension (file-name-extension source-file-name)))
+    (make-temp-file "flyparse_buffer_copy" nil (concat "." extension))))
 
 
 (defun flyparse-safe-delete-file (file-name)
@@ -538,33 +580,18 @@
     (delete-file file-name)
     (flyparse-log 3 "Deleted file %s" file-name)))
 
-(defun flyparse-cleanup-temp-files (source-file-name)
-  "Cleanup temporary files."
-  (flyparse-safe-delete-file (flyparse-temp-buffer-copy-file-name source-file-name))
-  (flyparse-safe-delete-file (flyparse-temp-parser-output-name source-file-name)))
-
-
-(defun flyparse-cmd-for-file-type (file-name &optional cmd-list)
-  "Return a command list appropriate to the file-type."
-  (let* ((cmd-list (or cmd-list flyparse-file-type-commands))
-	 (regex (first (first cmd-list)))
-	 (cmd (rest (first cmd-list))))
-    (or
-     (if (string-match regex file-name) 
-	 cmd)
-     (if (not (null (rest cmd-list))) 
-	 (flyparse-cmd-for-file-type file-name (rest cmd-list))))))
-
 
 (defun flyparse-start-parse ()
   "Start a flyparse parse on current buffer."
   (interactive)
-  (let* ((parser-cmd (funcall flyparse-single-file-cmd-maker
-			      (flyparse-temp-buffer-copy-file-name buffer-file-name)
-			      (flyparse-temp-parser-output-name buffer-file-name)))
+  (let* ((temp-copy-file-name (flyparse-make-temp-buffer-copy-file buffer-file-name))
+	 (output-file-name (flyparse-make-temp-parser-output-file buffer-file-name))
+	 (parser-cmd (funcall flyparse-single-file-cmd-maker
+			      temp-copy-file-name
+			      output-file-name))
 	 (cmd (first parser-cmd))
 	 (args (rest parser-cmd)))
-    (flyparse-create-temp-buffer-copy)
+    (flyparse-save-buffer-in-file temp-copy-file-name)
     (condition-case err
 	(let ((proc (flyparse-create-parse-process cmd args)))
 	  (flyparse-log 2 "Created process %d, command=%s, dir=%s" 
@@ -573,6 +600,8 @@
 			default-directory)
 	  (set-process-sentinel proc 'flyparse-process-sentinel)
 	  (set-process-filter proc 'flyparse-process-filter)
+	  (process-put proc 'output-file-name output-file-name)
+	  (process-put proc 'temp-copy-file-name temp-copy-file-name)
 	  (process-put proc 'parser-output "")
 	  (setq flyparse-is-running t)
 	  (flyparse-clear-pending-patches)
@@ -582,7 +611,8 @@
        (let* ((err-str (format "Failed to launch parser process '%s' with args %s: %s"
 			       cmd args (error-message-string err))))
 	 (flyparse-log 0 err-str)
-	 (flyparse-cleanup-temp-files buffer-file-name)
+	 (flyparse-safe-delete-file temp-copy-file-name)
+	 (flyparse-safe-delete-file output-file-name)
 	 )))))
 
 (defun flyparse-create-parse-process (program-name args)
@@ -605,7 +635,9 @@
 	   (source-buffer     (process-buffer process))
 	   (source-file-name  (buffer-file-name source-buffer))
 	   (proc-id           (process-id process))
-	   (stderr (process-get process 'parser-output)))
+	   (stderr (process-get process 'parser-output))
+	   (output-file-name (process-get process 'output-file-name))
+	   (temp-copy-file-name (process-get process 'temp-copy-file-name)))
       (flyparse-log 3 "Flyparse process %d exited with code %d" proc-id exit-status)
       (delete-process process)
       (if (buffer-live-p source-buffer)
@@ -617,7 +649,7 @@
 		  (if (eq exit-status 0)
 		      (let ((tree '())) ;; 'tree' will be set by the 'load'ed list..
 			;; Load the parse tree...
-			(load (flyparse-temp-parser-output-name source-file-name) nil t)
+			(load output-file-name nil t)
 			(if (flyparse-tree-acceptable-p tree)
 			    (flyparse-update-newest-parse-tree tree)
 			  (error "Invalid parse tree.")))
@@ -625,19 +657,22 @@
 		  ;; Log stderr
 		  (if (> (length stderr) 0) (flyparse-log 1 stderr))
 		  (setq flyparse-error-in-last-parse nil)
-		  (flyparse-cleanup-temp-files source-file-name)
+		  (flyparse-safe-delete-file temp-copy-file-name)
+		  (flyparse-safe-delete-file output-file-name)
 		  )
 	      (error
 	       (let ((err-str (format "Flyparse Failed: %s: %s: %s" source-buffer (error-message-string err) stderr)))
 		 (flyparse-report-status "Failed" "")
 		 (flyparse-log 0 err-str)
-		 (flyparse-cleanup-temp-files source-file-name)
+		 (flyparse-safe-delete-file temp-copy-file-name)
+		 (flyparse-safe-delete-file output-file-name)
 		 (setq flyparse-error-in-last-parse t)
 		 ))))
 
 	;; Else, if source-buffer no longer exists
 	(progn 
-	  (flyparse-cleanup-temp-files source-file-name)
+	  (flyparse-safe-delete-file temp-copy-file-name)
+	  (flyparse-safe-delete-file output-file-name)
 	  (flyparse-log 3 "Flyparse sentinel called back to dead buffer %d with code %d" proc-id exit-status))
 	))))
 
@@ -717,7 +752,6 @@
   (when flyparse-timer
     (cancel-timer flyparse-timer)
     (setq flyparse-timer nil)
-    (flyparse-cleanup-temp-files buffer-file-name)
     ))
 
 (defun flyparse-after-change-function (start stop len)

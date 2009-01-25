@@ -33,7 +33,7 @@ end
 
 
 AS3_TARGET = "../bin/.as3"
-DRIVER_SOURCE = ["src/emacs/flyparse/as3/FileWalker.java", "src/emacs/flyparse/as3/AS3Driver.java"]
+DRIVER_SOURCE = ["../src/emacs/flyparse/FileWalker.java", "src/emacs/flyparse/as3/AS3Driver.java"]
 FLYPARSE_CORE_SOURCE = FileList["../src/**/*.java"]
 file AS3_TARGET => PARSER_TARGETS + DRIVER_SOURCE + FLYPARSE_CORE_SOURCE do
   sh "javac #{JAVAC_OPTIONS.join(" ")} #{(PARSER_TARGETS + DRIVER_SOURCE).join(" ")} -d ../bin"

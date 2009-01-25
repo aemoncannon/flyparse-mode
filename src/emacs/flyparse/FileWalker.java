@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package emacs.flyparse.as3;
+package emacs.flyparse;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -48,7 +48,5 @@ public class FileWalker
 	}
 	return files;		
     }
-
-
   
 }
