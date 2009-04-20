@@ -517,7 +517,9 @@ forStatement
 
 	:	FOR
 		LPAREN
-		(	forInClause RPAREN statement
+		(	
+        (forInClause) =>
+        forInClause RPAREN statement
 			-> ^(FOR_IN_LOOP FOR LPAREN forInClause RPAREN statement)
 
 		|	traditionalForClause RPAREN statement
