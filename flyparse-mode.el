@@ -1064,17 +1064,16 @@
 
 (defun flyparse-tree-as-text (tree)
   "Naively destructure a flyparse tree to text representation."
-  (if (not (null tree))
-      (if (flyparse-leaf-p tree)
-	  (flyparse-tree-type tree)
-	(let ((result ""))
-	  (flyparse-each-subtree
-	   (tree subtree nil offset)
-	   (let ((space-width (max 0 (- (+ offset (flyparse-tree-beg-offset subtree)) offset 1))))
-	     (setf result (concat result (make-string space-width (string-to-char " "))))
-	     (setf result (concat result (flyparse-tree-as-text subtree)))))
-	  result))
-    (error '"Tried to convert null tree to text")))
+  (if (null tree) ""
+    (if (flyparse-leaf-p tree)
+	(flyparse-tree-type tree)
+      (let ((result ""))
+	(flyparse-each-subtree
+	 (tree subtree nil offset)
+	 (let ((space-width (max 0 (- (+ offset (flyparse-tree-beg-offset subtree)) offset 1))))
+	   (setf result (concat result (make-string space-width (string-to-char " "))))
+	   (setf result (concat result (flyparse-tree-as-text subtree)))))
+	result))))
 
 
 (defun flyparse-absolute-tree-copy (tree base-buffer-offset)
